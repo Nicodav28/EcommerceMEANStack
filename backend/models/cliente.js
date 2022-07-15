@@ -18,6 +18,6 @@ var clienteSchema = schema({
     dni: {type: String, required: false}
 });
 
-// Exportar Schema con nombre cliente
+// Exportar Schema con nombre cliente según registro creado
 
 module.exports = mongoose.model('cliente', clienteSchema);
