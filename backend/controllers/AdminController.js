@@ -1,7 +1,8 @@
 'use strict'
 // ----------IMPORTS------------
 var adminModel = require('../models/admin');
-var bcrypt = require('bcrypt-nodejs')
+var bcrypt = require('bcrypt-nodejs');
+var jwt = require('../helpers/jwt');
 
 
 const registroAdmin = async function(req, res){
@@ -31,6 +32,32 @@ const registroAdmin = async function(req, res){
     }
 }
 
+const loginAdmin = async function (req, res) {
+    var data = req.body;
+    var validateEmail = [];
+
+    validateEmail = await adminModel.find({ email: data.email });
+
+    if (validateEmail.length == 0) {
+        res.status(200).send({ message: 'No se encontro usuario', data: undefined });
+    } else {
+        let user = validateEmail[0];
+
+        bcrypt.compare(data.password, user.password, async function (error, check) {
+            if (check) {
+                res.status(200).send({ 
+                    data: user, 
+                    token: jwt.createToken(user)
+                });
+            } else {
+                res.status(200).send({ message: 'La contraseña no coincide', data: undefined });
+            }
+        });
+
+    }
+}
+
 module.exports = {
-    registroAdmin
+    registroAdmin,
+    loginAdmin
 }

@@ -10,5 +10,7 @@ var api = express.Router();
 
 // Se crea ruta que al acceder ejecuta metodo del controlador 
 api.post('/registroAdmin', adminController.registroAdmin);
+api.post('/loginAdmin', adminController.loginAdmin);
+
 
 module.exports = api;
