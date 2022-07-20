@@ -39,7 +39,7 @@ const loginAdmin = async function (req, res) {
     validateEmail = await adminModel.find({ email: data.email });
 
     if (validateEmail.length == 0) {
-        res.status(200).send({ message: 'No se encontro usuario', data: undefined });
+        res.status(200).send({ message: 'No se encontro el correo electronico ingresado,<br> verifique los datos e intentelo nuevamente', data: undefined });
     } else {
         let user = validateEmail[0];
 
@@ -50,7 +50,7 @@ const loginAdmin = async function (req, res) {
                     token: jwt.createToken(user)
                 });
             } else {
-                res.status(200).send({ message: 'La contraseña no coincide', data: undefined });
+                res.status(200).send({ message: 'La contraseña ingresada no coincide, verifique<br> los datos e intentelo nuevamente', data: undefined });
             }
         });
 

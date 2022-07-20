@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/service/admin.service';
+import { Router } from '@angular/router'; 
 
 declare var jQuery: any;
 declare var $: any;
@@ -13,19 +15,54 @@ declare var iziToast: any;
 export class LoginComponent implements OnInit {
 
   public user: any = {};
+  public userStorage: any = {};
+  public token: any = '';
 
-  constructor() { 
+  constructor(
+    private _adminService: AdminService,
+    private _router: Router
+  ) {
+    this.token = this._adminService.getToken();
   }
 
   ngOnInit(): void {
+    if(this.token){
+      this._router.navigate(['/']);
+    }else{
+      this._router.navigate(['login']);
+    }
   }
 
-  login(loginForm:any){
-    if(loginForm.valid){
+  login(loginForm: any) {
+    if (loginForm.valid) {
       console.log(this.user);
-      alert('Si es valido');
 
-    }else{
+      let data = {
+        email: this.user.email,
+        password: this.user.password
+      }
+      this._adminService.loginAdmin(data).subscribe(
+        (response: any) => {
+          if  (response.data == undefined) {
+              iziToast.error({
+              title: 'Error:',
+              class: 'text-danger',
+              position: 'topRight',
+              message: response.message
+            });
+          }else{
+            this.userStorage = response.data;
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('_id', response.data._id);
+
+            this._router.navigate(['/']);
+          }
+        },
+        (error: any) => {
+          console.log(error);
+        }
+      );
+    } else {
       iziToast.error({
         title: 'Error:',
         class: 'text-danger',
