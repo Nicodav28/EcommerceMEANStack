@@ -57,7 +57,27 @@ const loginCliente = async function (req, res) {
     }
 }
 
+const fetchClients = async function (req, res){
+    
+    let tipo = req.params['tipo'];
+    let filtro = req.params['filtro'];
+
+    if(tipo == null || tipo == 'null'){
+        let data = await cliente.find();
+        res.status(200).send({data: data});
+    }else{
+        if(tipo == 'apellidos'){
+            let data = await cliente.find({apellidos: new RegExp(filtro, 'i')});
+            res.status(200).send({data: data});
+        }else if(tipo == 'email'){
+            let data = await cliente.find({email: new RegExp(filtro, 'i')});
+            res.status(200).send({data: data});
+        }
+    }
+}
+
 module.exports = {
     registroCliente,
-    loginCliente
+    loginCliente,
+    fetchClients
 }

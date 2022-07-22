@@ -1,0 +1,103 @@
+<app-sidebar></app-sidebar>
+<!-- Side navigation (Off-canvas)-->
+<aside class="cs-offcanvas cs-offcanvas-expand bg-dark" id="componentsNav">
+    <div class="cs-offcanvas-cap d-none d-lg-block py-4">
+        <a class="navbar-brand py-2" href="dev-setup.html">
+            <img src="assets/img/components/logo/logo-white.svg" alt="Createx" width="130">
+        </a>
+        <span class="badge badge-warning">Docs</span>
+    </div>
+    <div class="cs-offcanvas-cap d-flex d-lg-none">
+        <div class="d-flex align-items-center mt-1">
+            <h5 class="text-light mb-0 mr-3">Menu</h5>
+            <span class="badge badge-warning">Docs</span>
+        </div>
+        <button class="close text-light" type="button" data-dismiss="offcanvas" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="d-flex d-lg-none align-items-center py-4 px-3 border-bottom border-light">
+        <a class="btn btn-primary btn-block mr-3 px-4" href="index.html"><i class="cxi-eye mt-n1 mr-2"></i>Preview</a>
+        <a class="btn btn-success btn-block mt-0 px-4" href="../components/typography.html"><i
+                class="cxi-layouts mt-n1 mr-2"></i>Components</a>
+    </div>
+    <div class="cs-offcanvas-body px-0 pt-4 pb-grid-gutter" data-simplebar data-simplebar-inverse>
+        <h6 class="font-size-lg text-light px-4 mt-2 mb-3">Contents</h6>
+        <hr class="hr-gradient hr-light mb-2 opacity-25">
+        <nav class="nav nav-light">
+            <a class="nav-link px-4 active" href="dev-setup.html">Dev environment setup</a>
+            <a class="nav-link px-4" href="working-with-gulp.html">Working with Gulp</a>
+
+        </nav>
+    </div>
+</aside>
+
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Clientes</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+        <p class="text-muted">Este módulo lista todos los clientes de la tienda.</p>
+        <p class="font-size-sm font-weight-medium pl-md-4"><a class="text-nowrap"
+                href="https://getbootstrap.com/docs/4.5/components/forms/" target="_blank" rel="noopener">Registrar
+                nuevo<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a></p>
+    </div>
+</div>
+
+<div class="card box-shadow-sm">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Filtro de clientes</h5>
+    </div>
+    <div class="card-header">
+        <form class="form-inline pt-2">
+            <label class="sr-only" for="inline-form-input-name">Apellidos</label>
+            <input class="form-control mb-3 mr-sm-4" [(ngModel)]="lastNameFilter" (keyup)="filterData('apellidos');" type="text" id="inline-form-input-name" name="lastNameFilter" placeholder="Apellidos">
+            <label class="sr-only" for="inline-form-input-username">Correo</label>
+            <div class="input-group mb-3 mr-sm-4">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">@</div>
+                </div>
+                <input class="form-control" type="text" id="inline-form-input-username" name="emailFilter" [(ngModel)]="emailFilter" (keyup)="filterData('email');" placeholder="Correo Electronico         ">
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Correo</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let cliente of clientes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let indice = index">
+                    <tr>
+                        <td>{{indice+1}}</td>
+                        <td>{{cliente.nombres}}</td>
+                        <td>{{cliente.apellidos}}</td>
+                        <td>{{cliente.email}}</td>
+                        <td>
+                            <div class="btn-group dropdown d-inline-block mb-3 me-2">
+                                <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="#">Editar Cliente</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Eliminar Cliente</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <ngb-pagination
+        [(page)] = "page"
+        [pageSize] = "pageSize" 
+        [collectionSize]="clientes.length"
+        ></ngb-pagination>
+    </div>
+</div>
