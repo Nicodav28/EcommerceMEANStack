@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/service/admin.service';
 import { ClienteService } from 'src/app/service/cliente.service';
 
 @Component({
@@ -12,16 +13,18 @@ export class IndexClienteComponent implements OnInit {
   public lastNameFilter = '';
   public emailFilter = '';
   public page = 1;
-  public pageSize = 1;
+  public pageSize = 2;
+  public token: any;
 
   constructor(
-    private _clienteService: ClienteService
+    private _clienteService: ClienteService,
+    private _adminService: AdminService
   ) {
-
+    this.token = this._adminService.getToken();
    }
 
   ngOnInit(): void {
-    this._clienteService.fetchClients(null, null).subscribe(
+    this._clienteService.fetchClients(null, null, this.token).subscribe(
       response =>{
         this.clientes = response.data;
       },
@@ -33,7 +36,7 @@ export class IndexClienteComponent implements OnInit {
 
   filterData(tipo: any){
     if(tipo == 'apellidos'){
-      this._clienteService.fetchClients(tipo, this.lastNameFilter).subscribe(
+      this._clienteService.fetchClients(tipo, this.lastNameFilter, this.token).subscribe(
         response =>{
           this.clientes = response.data;
         },
@@ -42,7 +45,7 @@ export class IndexClienteComponent implements OnInit {
         }
       );
     }else if(tipo == 'email'){
-      this._clienteService.fetchClients(tipo, this.emailFilter).subscribe(
+      this._clienteService.fetchClients(tipo, this.emailFilter, this.token).subscribe(
         response =>{
           this.clientes = response.data;
         },

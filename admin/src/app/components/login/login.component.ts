@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
 
   login(loginForm: any) {
     if (loginForm.valid) {
-      console.log(this.user);
+      // console.log(this.user);
 
       let data = {
         email: this.user.email,
