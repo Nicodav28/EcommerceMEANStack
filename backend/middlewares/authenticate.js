@@ -5,9 +5,8 @@ var moment = require('moment');
 var secret = 'AXS28856';
 
 exports.auth = function(req, res, next){
-    console.log(req.headers);
-    if(!req.headers.Authorization){
-        return res.status(403).send({message: 'NoHeadersError'});
+    if(!req.headers.authorization){
+        return res.status(403).send({message: req.headers});
     }
 
     var token = req.headers.authorization.replace(/['"]+/g,'');
@@ -24,7 +23,7 @@ exports.auth = function(req, res, next){
             }
 
         } catch (error) {
-            return res.status(403).send({message: 'InvalidToken'});
+            return res.status(403).send({message: 'InvalidTokenDOS'});
         }
     }
 

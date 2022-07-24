@@ -6,7 +6,10 @@ var clienteController = require('../controllers/ClienteController');
 
 // Inicializa dependencia de framework express en el metodo router para dar uso a las Rutas
 var api = express.Router();
-var authJwt = require('../middlewares/authenticate')
+var authJwt = require('../middlewares/authenticate');
+var jwt = require('jwt-simple');
+var moment = require('moment'); 
+var secret = 'AXS28856';
 
 // Se crea ruta que al acceder ejecuta metodo registroCliente del controlador clienteController
 api.post('/registroCliente', clienteController.registroCliente);

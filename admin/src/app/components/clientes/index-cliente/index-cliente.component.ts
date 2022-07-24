@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/service/admin.service';
 import { ClienteService } from 'src/app/service/cliente.service';
+import { Router } from '@angular/router'; 
+
+declare var iziToast: any;
 
 @Component({
   selector: 'app-index-cliente',
@@ -18,7 +21,8 @@ export class IndexClienteComponent implements OnInit {
 
   constructor(
     private _clienteService: ClienteService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _router: Router
   ) {
     this.token = this._adminService.getToken();
    }
@@ -29,6 +33,15 @@ export class IndexClienteComponent implements OnInit {
         this.clientes = response.data;
       },
       error =>{
+        if(error.status == 403 || error.status == 500){
+          iziToast.error({
+          title: 'Error:',
+          class: 'text-danger',
+          position: 'topRight',
+          message: error.message// 'Ha expirado la sesión o no cuenta con los permisos para acceder al modulo'
+        });
+        this._router.navigate(['/inicio']);
+      }
         console.log(error);
       }
     );
