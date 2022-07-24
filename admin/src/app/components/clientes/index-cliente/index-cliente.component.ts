@@ -38,7 +38,7 @@ export class IndexClienteComponent implements OnInit {
           title: 'Error:',
           class: 'text-danger',
           position: 'topRight',
-          message: error.message// 'Ha expirado la sesión o no cuenta con los permisos para acceder al modulo'
+          message: 'Ha expirado la sesión o no cuenta con los permisos para acceder al modulo'//error.message
         });
         this._router.navigate(['/inicio']);
       }

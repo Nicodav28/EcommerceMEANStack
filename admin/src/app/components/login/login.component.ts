@@ -54,7 +54,11 @@ export class LoginComponent implements OnInit {
             this.userStorage = response.data;
             localStorage.setItem('token', response.token);
             localStorage.setItem('_id', response.data._id);
-
+            iziToast.success({
+              title:'Login Exitoso',
+              position: 'topRight',
+              message: 'Inicio de sesión exitoso Bienvenido/a: <strong>'+ response.data.nombres+'</strong>',
+          });
             this._router.navigate(['/']);
           }
         },

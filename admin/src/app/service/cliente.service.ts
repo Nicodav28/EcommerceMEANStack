@@ -17,7 +17,6 @@ export class ClienteService {
   }
 
   fetchClients(tipo: any, filtro: any, token: any): Observable<any> {
-    console.log(token);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.get(this.url + 'listarClientes/' + tipo + '/' + filtro, { headers: headers });
   }
