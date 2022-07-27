@@ -15,7 +15,8 @@ var clienteSchema = schema({
     telefono: {type: String, required: false},
     genero: {type: String, required: false},
     f_nacimiento: {type: String, required: true},
-    dni: {type: String, required: false}
+    dni: {type: String, required: false},
+    createdAt: {type: Date, default: Date.now, required: true}
 });
 
 // Exportar Schema con nombre cliente según registro creado

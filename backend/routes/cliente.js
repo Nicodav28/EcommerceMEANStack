@@ -14,5 +14,6 @@ api.post('/loginCliente', clienteController.loginCliente);
 api.get('/listarClientes/:tipo/:filtro?', authJwt.auth, clienteController.fetchClients);
 api.post('/registerClientAdmin', authJwt.auth, clienteController.registerClientAdmin);
 api.get('/obtenerClienteAdmin/:id', authJwt.auth, clienteController.fetchClientId);
+api.put('/actualizarClienteAdmin/:id', authJwt.auth, clienteController.updateClientData);
 
 module.exports = api;

@@ -31,4 +31,9 @@ export class ClienteService {
     return this._http.get(this.url + '/obtenerClienteAdmin/'+ id, { headers: headers });
   }
 
+  updateClient(id: any, data: any, token: any){
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.put(this.url + '/actualizarClienteAdmin/'+ id, data, { headers: headers });
+  }
+
 }

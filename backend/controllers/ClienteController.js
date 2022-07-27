@@ -133,10 +133,35 @@ const fetchClientId = async function(req, res){
     }
 }
 
+const updateClientData = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            var data = req.body;
+
+            var update = await cliente.findByIdAndUpdate({_id:id},{
+                nombres: data.nombres,
+                apellidos: data.apellidos,
+                email: data.email,
+                telefono: data.telefono,
+                f_nacimiento: data.f_nacimiento,
+                dni: data.dni,
+                genero: data.genero
+            });
+            res.status(200).send({ data:update, message: 'Usuario actualizado exitosamente' });
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroCliente,
     loginCliente,
     fetchClients,
     registerClientAdmin,
-    fetchClientId
+    fetchClientId,
+    updateClientData
 }
