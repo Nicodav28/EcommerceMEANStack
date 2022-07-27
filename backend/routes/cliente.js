@@ -12,5 +12,7 @@ var authJwt = require('../middlewares/authenticate');
 api.post('/registroCliente', clienteController.registroCliente);
 api.post('/loginCliente', clienteController.loginCliente);
 api.get('/listarClientes/:tipo/:filtro?', authJwt.auth, clienteController.fetchClients);
+api.post('/registerClientAdmin', authJwt.auth, clienteController.registerClientAdmin);
+api.get('/obtenerClienteAdmin/:id', authJwt.auth, clienteController.fetchClientId);
 
 module.exports = api;

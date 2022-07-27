@@ -86,8 +86,57 @@ const fetchClients = async function (req, res) {
     }
 }
 
+const registerClientAdmin = async function(req, res){
+    var clientesAdmArray = [];
+
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var data = req.body;
+            clientesAdmArray = await cliente.find({ email: data.email });
+            if(clientesAdmArray.length == 0){
+                bcrypt.hash('123456789', null, null, async function(err, hash){
+                    if(hash){
+                        data.password = hash;
+                        let reg = await cliente.create(data);
+                        res.status(200).send({ data: reg });
+                    }else{
+                        res.status(200).send({ message: 'No ingresa contraseña', data: undefined });
+                    }
+                });
+            }else{
+                res.status(409).send({ message: 'El correo ingresado ya se encuentra registrado', data: undefined });
+            }
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const fetchClientId = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            try {
+                var reg = await cliente.findById({_id:id});
+                res.status(200).send({ data: reg });
+            } catch (error) {
+                res.status(200).send({ data: undefined });
+            }
+
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroCliente,
     loginCliente,
-    fetchClients
+    fetchClients,
+    registerClientAdmin,
+    fetchClientId
 }

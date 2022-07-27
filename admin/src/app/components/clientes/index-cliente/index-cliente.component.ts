@@ -16,7 +16,7 @@ export class IndexClienteComponent implements OnInit {
   public lastNameFilter = '';
   public emailFilter = '';
   public page = 1;
-  public pageSize = 2;
+  public pageSize = 5;
   public token: any;
 
   constructor(

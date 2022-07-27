@@ -20,4 +20,15 @@ export class ClienteService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.get(this.url + 'listarClientes/' + tipo + '/' + filtro, { headers: headers });
   }
+
+  clientRegister(data: any, token: any){
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.post(this.url + 'registerClientAdmin', data, { headers: headers });
+  }
+
+  fetchClientId(id: any, token: any){
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.get(this.url + '/obtenerClienteAdmin/'+ id, { headers: headers });
+  }
+
 }
