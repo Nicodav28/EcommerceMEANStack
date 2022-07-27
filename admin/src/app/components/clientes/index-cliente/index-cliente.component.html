@@ -49,9 +49,27 @@
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" [routerLink]="['/panel/clientes/',cliente._id]">Editar Cliente</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Eliminar Cliente</a>
+                                    <a class="dropdown-item" data-toggle="modal" [attr.data-target]="'#delete-'+cliente._id" style="cursor: pointer;">Eliminar Cliente</a>
                                 </div>
                             </div>
+
+                            <div class="modal fade" id="delete-{{cliente._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h4 class="modal-title">Eliminar cliente {{cliente.nombres}} {{cliente.apellidos}}</h4>
+                                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                      <p class="fs-sm">Esta seguro que desea eliminar este cliente?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-danger btn-sm" type="button" (click)="deleteClient(cliente._id)">Si, eliminar cliente</button>
+                                        <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
                         </td>
                     </tr>
                 </tbody>

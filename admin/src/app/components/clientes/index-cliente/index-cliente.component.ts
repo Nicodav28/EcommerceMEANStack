@@ -4,6 +4,8 @@ import { ClienteService } from 'src/app/service/cliente.service';
 import { Router } from '@angular/router'; 
 
 declare var iziToast: any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-index-cliente',
@@ -28,6 +30,10 @@ export class IndexClienteComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.initData();
+  }
+
+  initData(){
     this._clienteService.fetchClients(null, null, this.token).subscribe(
       response =>{
         this.clientes = response.data;
@@ -67,6 +73,25 @@ export class IndexClienteComponent implements OnInit {
         }
       );
     }
+  }
+
+  deleteClient(id){
+    this._clienteService.deleteClient(id, this.token).subscribe(
+      response => {        
+        iziToast.success({
+          title: 'Usuario Eliminado:',
+          position: 'topRight',
+          message: 'El usuario fue eliminado exitosamente'//error.message
+        });
+
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.initData();
+      },
+      error =>{
+        console.log(error);
+      }
+    );
   }
 
 }

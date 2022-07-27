@@ -157,11 +157,28 @@ const updateClientData = async function(req, res){
     }
 }
 
+const deleteClient = async function (req, res) {
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            
+            let delData = await cliente.findByIdAndRemove({_id:id});
+
+            res.status(200).send({ data: delData, message: 'Usuario eliminado exitosamente' });
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroCliente,
     loginCliente,
     fetchClients,
     registerClientAdmin,
     fetchClientId,
-    updateClientData
+    updateClientData,
+    deleteClient
 }
