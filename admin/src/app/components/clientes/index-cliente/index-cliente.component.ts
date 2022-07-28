@@ -20,6 +20,7 @@ export class IndexClienteComponent implements OnInit {
   public page = 1;
   public pageSize = 5;
   public token: any;
+  public loadData: any = true;
 
   constructor(
     private _clienteService: ClienteService,
@@ -37,6 +38,10 @@ export class IndexClienteComponent implements OnInit {
     this._clienteService.fetchClients(null, null, this.token).subscribe(
       response =>{
         this.clientes = response.data;
+        this.loadData = false;
+
+        // setTimeout(() =>{
+        // },3000);
       },
       error =>{
         if(error.status == 403 || error.status == 500){
@@ -55,18 +60,22 @@ export class IndexClienteComponent implements OnInit {
 
   filterData(tipo: any){
     if(tipo == 'apellidos'){
+      this.loadData = true;
       this._clienteService.fetchClients(tipo, this.lastNameFilter, this.token).subscribe(
         response =>{
           this.clientes = response.data;
+          this.loadData = false;
         },
         error =>{
           console.log(error);
         }
       );
     }else if(tipo == 'email'){
+      this.loadData = true;
       this._clienteService.fetchClients(tipo, this.emailFilter, this.token).subscribe(
         response =>{
           this.clientes = response.data;
+          this.loadData = false;
         },
         error =>{
           console.log(error);

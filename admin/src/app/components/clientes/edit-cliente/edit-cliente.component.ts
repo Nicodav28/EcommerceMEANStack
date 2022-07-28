@@ -16,6 +16,8 @@ export class EditClienteComponent implements OnInit {
   public clientData: any = {};
   public id: any;
   public token: any;
+  public loadBtn:any = false;
+  public loadData: any = true;
 
   constructor(
     private _route: ActivatedRoute,
@@ -34,10 +36,11 @@ export class EditClienteComponent implements OnInit {
             //@ts-ignore
             if(response.data == undefined){
               this.clientData = undefined;
-              console.log(this.clientData);
+              this.loadData = false;
             }else{
               //@ts-ignore
               this.clientData = response.data;
+              this.loadData = false;
             }
           },
           error => {
@@ -50,6 +53,7 @@ export class EditClienteComponent implements OnInit {
 
   clientUpdate(updateForm: any){
     if(updateForm.valid){
+      this.loadBtn = true;
       this._clienteService.updateClient(this.id, this.clientData, this.token).subscribe(
         response => {
           console.log(response);
@@ -58,6 +62,7 @@ export class EditClienteComponent implements OnInit {
             position: 'topRight',
             message: 'El usuario cliente ha sido actualizado de manera exitosa'//error.message
           });
+          this.loadBtn = false;
         },
         error => {
           console.log(error);

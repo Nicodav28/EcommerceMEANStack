@@ -18,6 +18,8 @@ export class CreateClienteComponent implements OnInit {
 
   public token: any;
 
+  public loadBtn: any = false;
+
   constructor(
     private _clienteService: ClienteService,
     private _adminService: AdminService
@@ -31,6 +33,7 @@ export class CreateClienteComponent implements OnInit {
   clientRegister(clientRegister: any){
     if(clientRegister.valid){
       console.log(this.clientData);
+      this.loadBtn = true;
       this._clienteService.clientRegister(this.clientData, this.token).subscribe(
         response=>{
           // console.log(response);
@@ -40,6 +43,7 @@ export class CreateClienteComponent implements OnInit {
             message: 'El usuario cliente ha sido creado de manera exitosa'//error.message
           });
           clientRegister.reset();
+          this.loadBtn = false;
         },
         error=>{
           if(error.status == 409){

@@ -37,42 +37,54 @@
                         <th>Opciones</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let cliente of clientes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let indice = index">
+                <tbody *ngIf="loadData == true">
                     <tr>
-                        <td>{{indice+1}}</td>
-                        <td>{{cliente.nombres}}</td>
-                        <td>{{cliente.apellidos}}</td>
-                        <td>{{cliente.email}}</td>
-                        <td>
-                            <div class="btn-group dropdown d-inline-block mb-3 me-2">
-                                <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" [routerLink]="['/panel/clientes/',cliente._id]">Editar Cliente</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" data-toggle="modal" [attr.data-target]="'#delete-'+cliente._id" style="cursor: pointer;">Eliminar Cliente</a>
-                                </div>
+                        <td class="text-center" colspan="5">
+                            <div class="spinner-border m-2" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden"></span>
                             </div>
-
-                            <div class="modal fade" id="delete-{{cliente._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h4 class="modal-title">Eliminar cliente {{cliente.nombres}} {{cliente.apellidos}}</h4>
-                                      <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                      <p class="fs-sm">Esta seguro que desea eliminar este cliente?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-danger btn-sm" type="button" (click)="deleteClient(cliente._id)">Si, eliminar cliente</button>
-                                        <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                         </td>
                     </tr>
                 </tbody>
+                <ng-container *ngIf="loadData != true">
+                    <tbody *ngFor="let cliente of clientes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let indice = index">
+                        <tr>
+                            <td>{{indice+1}}</td>
+                            <td>{{cliente.nombres}}</td>
+                            <td>{{cliente.apellidos}}</td>
+                            <td>{{cliente.email}}</td>
+                            <td>
+                                <div class="btn-group dropdown d-inline-block mb-3 me-2">
+                                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" [routerLink]="['/panel/clientes/',cliente._id]">Editar Cliente</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" data-toggle="modal" [attr.data-target]="'#delete-'+cliente._id" style="cursor: pointer;">Eliminar Cliente</a>
+                                    </div>
+                                </div>
+    
+                                <div class="modal fade" id="delete-{{cliente._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Eliminar cliente {{cliente.nombres}} {{cliente.apellidos}}</h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">Esta seguro que desea eliminar este cliente?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger btn-sm" type="button" (click)="deleteClient(cliente._id)">Si, eliminar cliente</button>
+                                            <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+
             </table>
         </div>
     </div>

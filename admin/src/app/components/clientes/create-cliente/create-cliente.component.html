@@ -60,7 +60,11 @@
 
         </div>
         <div class="card-footer">
-            <input class="btn btn-primary mr-3" type="submit" value="Crear cliente">
+            <input *ngIf="!loadBtn" class="btn btn-primary mr-3" type="submit" value="Crear cliente">
+            <button *ngIf="loadBtn" type="button" class="btn btn-primary" disabled>
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Registrando
+            </button>
             <a class="btn btn-warning" [routerLink]="['/panel/clientes']">Regresar</a>
         </div>
     </div>
