@@ -46,6 +46,15 @@
                         </td>
                     </tr>
                 </tbody>
+                <ng-container *ngIf="info == null" >
+                    <tbody>
+                        <tr>
+                            <td class="text-center" colspan="5">
+                                <h3>No existen usuarios con los caracteres ingresados.</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
                 <ng-container *ngIf="loadData != true">
                     <tbody *ngFor="let cliente of clientes | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let indice = index">
                         <tr>

@@ -14,6 +14,7 @@ import { IndexClienteComponent } from './components/clientes/index-cliente/index
 import { ErrorComponent } from './components/error/error.component';
 import { CreateClienteComponent } from './components/clientes/create-cliente/create-cliente.component';
 import { EditClienteComponent } from './components/clientes/edit-cliente/edit-cliente.component';
+import { CreateProductoComponent } from './components/productos/create-producto/create-producto.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { EditClienteComponent } from './components/clientes/edit-cliente/edit-cl
     IndexClienteComponent,
     ErrorComponent,
     CreateClienteComponent,
-    EditClienteComponent
+    EditClienteComponent,
+    CreateProductoComponent
   ],
   imports: [
     BrowserModule,
