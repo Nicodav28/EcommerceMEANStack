@@ -56,12 +56,12 @@
                         <div class="col-lg-12 form-group">
                             <label for="">Portada</label>
                             <div class="custom-file">
-                                <input class="custom-file-input" type="file" id="file-input">
-                                <label class="custom-file-label" for="file-input">Seleccionar imagen</label>
+                                <input class="custom-file-input" type="file" id="file-input" (change)="fileChangeEvent($event)">
+                                <label class="custom-file-label" id="inputPortada" for="file-input" style="white-space: nowrap; overflow: hidden">Seleccionar imagen</label>
                             </div>
                         </div>
                         <div class="col-lg-12">
-                            <img src="path-to-image" class="img-thumbnail" alt="Rounded image">
+                            <img [src]="imgSelected" class="img-thumbnail" alt="Rounded image">
                         </div>
                     </div>
                 </div>
@@ -69,7 +69,7 @@
         </div>
         <div class="card-footer">
             <button class="btn btn-primary mr-3" type="submit">Crear producto</button>
-            <a class="btn btn-warning">Regresar</a>
+            <a class="btn btn-warning" [routerLink]="['/panel/clientes']">Regresar</a>
         </div>
     </div>
 </form>
