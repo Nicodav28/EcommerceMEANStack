@@ -16,5 +16,6 @@ api.get('/obtenerRegistros/:filtro?', [authJwt.auth], ProductoController.fetchPr
 api.get('/obtenerImagen/:img', ProductoController.obtenerPortada);
 api.get('/fetchProductId/:id', authJwt.auth, ProductoController.fetchProductId);
 api.put('/updateProductData/:id', [authJwt.auth, pathImage], ProductoController.updateProductData);
+api.delete('/deleteProduct/:id', authJwt.auth, ProductoController.deleteProduct);
 
 module.exports = api;

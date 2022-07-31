@@ -73,6 +73,7 @@ export class UpdateProductoComponent implements OnInit {
       data.contenido = this.producto.contenido;
       data.descripcion = this.producto.descripcion;
 
+      this.loadBtn = true;
       this._productoService.updateProductData(data, this.id, this.token).subscribe(
         response => {
           console.log(response);
@@ -84,19 +85,28 @@ export class UpdateProductoComponent implements OnInit {
             position: 'topRight',
             message: 'La información ha sido actualizada de manera exitosa'
           });
+
+          this.loadBtn = false;
+          
           this._router.navigate(['/panel/productos']);
         },
         error => {
           console.log(error);
+          iziToast.error({
+            title: 'Error realizando registro:',
+            position: 'topRight',
+            message: 'Hubo un error actualizando la información'
+          });
+          this.loadBtn = false;
         }
       );
-      console.log(this.producto);
     } else {
       iziToast.error({
         title: 'Error realizando registro:',
         position: 'topRight',
-        message: 'Hubo un error actualizando la información'
+        message: 'Los datos ingresados en el formulario no son validos'
       });
+      this.loadBtn = false;
     }
   }
 

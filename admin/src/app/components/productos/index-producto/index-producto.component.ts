@@ -3,6 +3,8 @@ import { AdminService } from 'src/app/service/admin.service';
 import { global } from 'src/app/service/global';
 import { ProductoService } from 'src/app/service/producto.service';
 declare var iziToast: any;
+declare var jQuery: any;
+declare var $: any;
 
 @Component({
   selector: 'app-index-producto',
@@ -18,6 +20,7 @@ export class IndexProductoComponent implements OnInit {
   public url: string;
   public page = 1;
   public pageSize = 5;
+  public loadBtn: boolean = false;
 
   constructor(
     private _productoService: ProductoService,
@@ -69,6 +72,32 @@ export class IndexProductoComponent implements OnInit {
   resetFilter(){
     this.filtro = '';
     this.initData();
+  }
+
+  deleteItem(id){
+    this.loadBtn = true;
+    this._productoService.deleteClient(id, this.token).subscribe(
+      response => {
+        iziToast.success({
+          title: 'Producto Eliminado:',
+          position: 'topRight',
+          message: 'El producto fue eliminado exitosamente'//error.message
+        });
+
+        $('#delete-'+id).modal('hide');
+        $('.modal-backdrop').removeClass('show');
+        this.loadBtn = false;
+        this.initData();
+      },
+      error => {
+        iziToast.error({
+          title: 'Error:',
+          position: 'topRight',
+          message: 'Hubo un error eliminando el producto'//error.message
+        });
+        this.loadBtn = false;
+      }
+    );
   }
 
 }

@@ -55,7 +55,12 @@ export class ProductoService {
       return this._http.put(this.url + 'updateProductData/'+ id, formData, { headers: headers });
     }else{
       let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
-      return this._http.post(this.url + 'updateProductData/'+ id, data, { headers: headers });
+      return this._http.put(this.url + 'updateProductData/'+ id, data, { headers: headers });
     }
+  }
+
+  deleteClient(id: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.delete(this.url + 'deleteProduct/'+ id, { headers: headers });
   }
 }

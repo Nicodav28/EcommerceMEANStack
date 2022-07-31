@@ -51,7 +51,7 @@ const obtenerPortada = async function (req, res) {
             let pathImage = './uploads/default.jpg';
             res.status(200).sendFile(path.resolve(pathImage));
         }
-    })
+    });
 }
 
 const fetchProductId = async function (req, res) {
@@ -95,6 +95,15 @@ const updateProductData = async function(req, res){
                     contenido: data.contenido,
                     slug: data.slug
                 });
+
+                fileSys.stat('./uploads/productos/'+update.portada, function (err){
+                    if(!err){
+                        fileSys.unlink('./uploads/productos/' + update.portada,(err)=>{
+                            if(err) throw err;
+                        })
+                    }
+                });
+
                 res.status(200).send({ data: update, message: 'Actualización con imagen exitosa'});
             }else{
                 var update = await producto.findByIdAndUpdate({_id:id},{
@@ -117,10 +126,27 @@ const updateProductData = async function(req, res){
     }
 }
 
+const deleteProduct = async function (req, res) {
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            
+            let delData = await producto.findByIdAndRemove({_id:id});
+
+            res.status(200).send({ data: delData, message: 'Producto eliminado exitosamente' });
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroProducto,
     fetchProductsAdmin,
     obtenerPortada,
     fetchProductId,
-    updateProductData
+    updateProductData,
+    deleteProduct
 }
