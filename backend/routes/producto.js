@@ -14,5 +14,7 @@ var pathImage = multiparty({uploadDir: './uploads/productos'})
 api.post('/registroProducto', [authJwt.auth, pathImage], ProductoController.registroProducto);
 api.get('/obtenerRegistros/:filtro?', [authJwt.auth], ProductoController.fetchProductsAdmin);
 api.get('/obtenerImagen/:img', ProductoController.obtenerPortada);
+api.get('/fetchProductId/:id', authJwt.auth, ProductoController.fetchProductId);
+api.put('/updateProductData/:id', [authJwt.auth, pathImage], ProductoController.updateProductData);
 
 module.exports = api;

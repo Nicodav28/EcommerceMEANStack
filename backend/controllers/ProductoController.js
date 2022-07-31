@@ -54,8 +54,73 @@ const obtenerPortada = async function (req, res) {
     })
 }
 
+const fetchProductId = async function (req, res) {
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            try {
+                var reg = await producto.findById({_id:id});
+                res.status(200).send({ data: reg });
+            } catch (error) {
+                res.status(200).send({ data: undefined });
+            }
+
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const updateProductData = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var id = req.params['id'];
+            var data = req.body;
+
+            data.slug = data.titulo.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+
+            if(req.files){
+                var imgPath = req.files.portada.path;
+                var name = imgPath.split('\\');
+                var portadaName = name[2];
+                var update = await producto.findByIdAndUpdate({_id:id},{
+                    titulo: data.titulo,
+                    portada: portadaName,
+                    precio: data.precio,
+                    stock: data.stock,
+                    categoria: data.categoria,
+                    descripcion: data.descripcion,
+                    contenido: data.contenido,
+                    slug: data.slug
+                });
+                res.status(200).send({ data: update, message: 'Actualización con imagen exitosa'});
+            }else{
+                var update = await producto.findByIdAndUpdate({_id:id},{
+                    titulo: data.titulo,
+                    precio: data.precio,
+                    stock: data.stock,
+                    categoria: data.categoria,
+                    descripcion: data.descripcion,
+                    contenido: data.contenido,
+                    slug: data.slug
+                });    
+                res.status(200).send({ data: update, message: 'Actualización sin imagen exitosa'});        
+            }
+            
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroProducto,
     fetchProductsAdmin,
-    obtenerPortada
+    obtenerPortada,
+    fetchProductId,
+    updateProductData
 }

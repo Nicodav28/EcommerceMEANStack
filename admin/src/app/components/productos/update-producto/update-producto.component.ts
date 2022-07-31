@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/service/admin.service';
+import { global } from 'src/app/service/global';
 import { ProductoService } from 'src/app/service/producto.service';
 declare var iziToast: any;
 declare var jQuery: any;
@@ -8,67 +9,94 @@ declare var $: any;
 
 
 @Component({
-  selector: 'app-create-producto',
-  templateUrl: './create-producto.component.html',
-  styleUrls: ['./create-producto.component.css']
+  selector: 'app-update-producto',
+  templateUrl: './update-producto.component.html',
+  styleUrls: ['./update-producto.component.css']
 })
-export class CreateProductoComponent implements OnInit {
+export class UpdateProductoComponent implements OnInit {
 
-  producto: any = {};
-  public file: File = undefined;
-  public imgSelected: any | ArrayBuffer = 'assets/img/01.jpg';
+  public producto: any = {};
   public config: any = {};
-  public token: any;
+  public imgSelected: String | ArrayBuffer;
   public loadBtn: boolean = false;
+  public id: string;
+  public token: any;
+  public url: any;
+  public file: File = undefined;
 
   constructor(
     private _productoService: ProductoService,
+    private _route: ActivatedRoute,
     private _adminService: AdminService,
     private _router: Router
   ) {
-    this.token = _adminService.getToken();
     this.config = {
-      heigth: 500
-    }
-   }
-
-  ngOnInit(): void {
+      height: 500
+    };
+    this.token = this._adminService.getToken();
+    this.url = global.url;
   }
 
-  itemRegister(itemRegisterForm){
-    if(itemRegisterForm.valid){
-      if(this.file == undefined){
-        iziToast.error({
-          title: 'Error realizando registro:',
-          position: 'topRight',
-          message: 'Debe cargar una portada para registrar el producto'
-        }); 
-      }else{
-        this.loadBtn = true;
-        this._productoService.productRegister(this.producto, this.file, this.token).subscribe(
-          response =>{
-            console.log(response);
-            iziToast.success({
-              title: 'Registro Exitoso:',
-              position: 'topRight',
-              message: 'El producto ha sido registrado de manera exitosa'
-            }); 
-            this.loadBtn = false;
-            this._router.navigate(['/panel/productos']);
+  ngOnInit(): void {
+    this._route.params.subscribe(
+      params => {
+        this.id = params['id'];
+        this._productoService.fetchProductsId(this.id, this.token).subscribe(
+          response => {
+            if (response.data == undefined) {
+              this.producto = undefined;
+            } else {
+              this.producto = response.data;
+              this.imgSelected = this.url + 'obtenerImagen/' + this.producto.portada;
+            }
           },
-          error =>{
+          error => {
             console.log(error);
-            this.loadBtn = false;
           }
         );
       }
-    }else{
+    )
+  }
+
+  updateItem(updateProductForm) {
+    if (updateProductForm.valid) {
+
+      var data: any = {};
+      if(this.file != undefined){
+        data.portada = this.file;
+      }
+
+      data.titulo = this.producto.titulo;
+      data.stock = this.producto.stock;
+      data.precio = this.producto.precio;
+      data.categoria = this.producto.categoria;
+      data.contenido = this.producto.contenido;
+      data.descripcion = this.producto.descripcion;
+
+      this._productoService.updateProductData(data, this.id, this.token).subscribe(
+        response => {
+          console.log(response);
+          console.log(this.producto);
+          console.log(this.file);
+
+          iziToast.success({
+            title: 'Registro Exitoso:',
+            position: 'topRight',
+            message: 'La información ha sido actualizada de manera exitosa'
+          });
+          this._router.navigate(['/panel/productos']);
+        },
+        error => {
+          console.log(error);
+        }
+      );
+      console.log(this.producto);
+    } else {
       iziToast.error({
-        title: 'Error:',
+        title: 'Error realizando registro:',
         position: 'topRight',
-        message: 'Los datos ingresados en el formulario no son validos'
-      }); 
-      this.loadBtn = false;
+        message: 'Hubo un error actualizando la información'
+      });
     }
   }
 

@@ -17,6 +17,7 @@ import { EditClienteComponent } from './components/clientes/edit-cliente/edit-cl
 import { CreateProductoComponent } from './components/productos/create-producto/create-producto.component';
 import { NgxTinymceModule } from 'ngx-tinymce';
 import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
+import { UpdateProductoComponent } from './components/productos/update-producto/update-producto.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { IndexProductoComponent } from './components/productos/index-producto/in
     EditClienteComponent,
     CreateProductoComponent,
     IndexProductoComponent,
+    UpdateProductoComponent,
   ],
   imports: [
     BrowserModule,
