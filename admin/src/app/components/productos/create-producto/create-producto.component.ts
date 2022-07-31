@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminService } from 'src/app/service/admin.service';
+import { ProductoService } from 'src/app/service/producto.service';
 declare var iziToast: any;
 declare var jQuery: any;
 declare var $: any;
@@ -14,8 +16,18 @@ export class CreateProductoComponent implements OnInit {
   producto: any = {};
   public file: File = undefined;
   public imgSelected: any | ArrayBuffer = 'assets/img/01.jpg';
+  public config: any = {};
+  public token: any;
 
-  constructor() { }
+  constructor(
+    private _productoService: ProductoService,
+    private _adminService: AdminService
+  ) {
+    this.token = _adminService.getToken();
+    this.config = {
+      heigth: 500
+    }
+   }
 
   ngOnInit(): void {
   }
@@ -23,11 +35,20 @@ export class CreateProductoComponent implements OnInit {
   itemRegister(itemRegisterForm){
     if(itemRegisterForm.valid){
       console.log(this.producto);
-      iziToast.success({
-        title: 'Registro Exitoso:',
-        position: 'topRight',
-        message: this.producto
-      }); 
+
+      this._productoService.productRegister(this.producto, this.file, this.token).subscribe(
+        response =>{
+          console.log(response);
+          iziToast.success({
+            title: 'Registro Exitoso:',
+            position: 'topRight',
+            message: 'El producto ha sido registrado de manera exitosa'
+          }); 
+        },
+        error =>{
+          console.log(error);
+        }
+      );
     }else{
       iziToast.error({
         title: 'Error realizando registro:',

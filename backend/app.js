@@ -11,6 +11,7 @@ var port = process.env.PORT || 4201;// Variable para puerto de ejecución del Ba
 // ------------ROUTES IMPORTS----------
 var clienteRoute = require('./routes/cliente');
 var adminRoute = require ('./routes/admin');
+var productoRoute = require('./routes/producto');
 
 // Usar variable de mongoose para hacer conexion con la base de datos 
 mongoose.connect('mongodb://127.0.0.1:27017/tienda',(err, res) => {
@@ -37,6 +38,7 @@ app.use((req,res,next)=>{
 
 app.use('/api', clienteRoute);
 app.use('/api', adminRoute);
+app.use('/api', productoRoute);
 
 module.exports = app;
 

@@ -15,6 +15,7 @@ import { ErrorComponent } from './components/error/error.component';
 import { CreateClienteComponent } from './components/clientes/create-cliente/create-cliente.component';
 import { EditClienteComponent } from './components/clientes/edit-cliente/edit-cliente.component';
 import { CreateProductoComponent } from './components/productos/create-producto/create-producto.component';
+import { NgxTinymceModule } from 'ngx-tinymce';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { CreateProductoComponent } from './components/productos/create-producto/
     ErrorComponent,
     CreateClienteComponent,
     EditClienteComponent,
-    CreateProductoComponent
+    CreateProductoComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,7 +35,10 @@ import { CreateProductoComponent } from './components/productos/create-producto/
     FormsModule,
     HttpClientModule,
     routing,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgxTinymceModule.forRoot({
+
+      baseURL: '../../../assets/tinymce/'    })
   ],
   providers: [],
   bootstrap: [AppComponent]
