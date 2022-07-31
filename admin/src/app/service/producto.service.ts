@@ -29,4 +29,9 @@ export class ProductoService {
 
     return this._http.post(this.url + 'registroProducto', formData, { headers: headers });
   }
+
+  fetchProductsAdmin(filtro: any, token: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.get(this.url + 'obtenerRegistros/' + filtro, { headers: headers });
+  }
 }

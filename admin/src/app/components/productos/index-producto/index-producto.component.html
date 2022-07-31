@@ -1,0 +1,104 @@
+<app-sidebar></app-sidebar>
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Productos</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+        <p class="text-muted">Este módulo lista todos los productos de la tienda.</p>
+        <p class="font-size-sm font-weight-medium pl-md-4"><a class="text-nowrap" [routerLink]="['/panel/productos/registro']" rel="noopener">Registrar Nuevo Producto<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a></p>
+    </div>
+</div>
+
+<div class="card box-shadow-sm">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Filtro de Productos</h5>
+    </div>
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <div class="input-group">
+                    <input class="form-control mr-3" type="text" placeholder="Titulo del Producto" name="filtro" [(ngModel)]="filtro">
+                    <button class="btn btn-primary mr-3" type="button" (click)="filterProduct();">Filtrar</button>
+                    <button class="btn btn-warning" type="button" (click)="resetFilter();">Resetear Filtro</button>
+
+                  </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Titulo</th>
+                        <th>Stock</th>
+                        <th>Precio</th>
+                        <th>Categoria</th>
+                        <th>Ventas</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="loadData == true">
+                    <tr>
+                        <td class="text-center" colspan="6">
+                            <div class="spinner-border m-2" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-container *ngIf="loadData != true">
+                    <tbody *ngFor="let producto of productos | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let indice = index">
+                        <tr>
+                            <td>
+                                <h6 style="padding-bottom: 0;margin-bottom: 0;">
+                                    <img style="width: 80px" [src]="url+'obtenerImagen/'+producto.portada" class="img-thumbnail rounded-0" alt="Square image">
+                                    {{ producto.titulo }}
+                                </h6>
+                            </td>
+                            <td>{{ producto.stock }}</td>
+                            <td>{{ producto.precio }}</td>
+                            <td>{{ producto.categoria }}</td>
+                            <td>{{ producto.nventas }}</td>
+                            <td>
+                                <div class="btn-group dropdown d-inline-block mb-3 me-2">
+                                    <button class="btn btn-outline-secondary dropdown-toggle btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opciones</button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" [routerLink]="['/panel/clientes/',producto._id]">Editar Cliente</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" data-toggle="modal" [attr.data-target]="'#delete-'+producto._id" style="cursor: pointer;">Eliminar Cliente</a>
+                                    </div>
+                                </div>
+    
+                                <div class="modal fade" id="delete-{{producto._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Eliminar cliente {{producto.titulo}}</h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">Esta seguro que desea eliminar este producto?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger btn-sm" type="button">Si, eliminar cliente</button>
+                                            <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <ngb-pagination
+        [(page)] = "page"
+        [pageSize] = "pageSize" 
+        [collectionSize]="productos.length"
+        ></ngb-pagination>
+    </div>
+</div>

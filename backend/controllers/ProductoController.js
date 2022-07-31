@@ -1,6 +1,8 @@
 'use strict'
 
 var producto = require('../models/producto');
+var fileSys = require('fs');
+var path = require('path');
 
 const registroProducto = async function (req, res) {
     if(req.user){
@@ -24,6 +26,36 @@ const registroProducto = async function (req, res) {
     }
 }
 
+const fetchProductsAdmin = async function(req, res){
+    if(req.user){
+        if(req.user.rol == 'admin'){
+            var filtro = req.params['filtro'];
+
+            let getData = await producto.find({ titulo: new RegExp(filtro, 'i')});
+            res.status(200).send({ data: getData });
+        }else{
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const obtenerPortada = async function (req, res) {
+    var imgName = req.params['img'];
+    fileSys.stat('./uploads/productos/'+imgName, function (err){
+        if(!err){
+            let pathImage = './uploads/productos/'+imgName;
+            res.status(200).sendFile(path.resolve(pathImage));
+        }else{
+            let pathImage = './uploads/default.jpg';
+            res.status(200).sendFile(path.resolve(pathImage));
+        }
+    })
+}
+
 module.exports = {
-    registroProducto
+    registroProducto,
+    fetchProductsAdmin,
+    obtenerPortada
 }

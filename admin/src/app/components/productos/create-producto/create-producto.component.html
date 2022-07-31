@@ -68,8 +68,12 @@
             </div>
         </div>
         <div class="card-footer">
-            <button class="btn btn-primary mr-3" type="submit">Crear producto</button>
-            <a class="btn btn-warning" [routerLink]="['/panel/clientes']">Regresar</a>
+            <button *ngIf="!loadBtn" class="btn btn-primary mr-3" type="submit">Crear producto</button>
+            <button *ngIf="loadBtn" type="button" class="btn btn-primary" disabled>
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Registrando
+            </button>
+            <a class="btn btn-warning" [routerLink]="['/panel/productos']">Regresar</a>
         </div>
     </div>
 </form>

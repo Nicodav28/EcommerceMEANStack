@@ -12,5 +12,7 @@ var pathImage = multiparty({uploadDir: './uploads/productos'})
 
 // Se crea ruta que al acceder ejecuta metodo registroCliente del controlador clienteController
 api.post('/registroProducto', [authJwt.auth, pathImage], ProductoController.registroProducto);
+api.get('/obtenerRegistros/:filtro?', [authJwt.auth], ProductoController.fetchProductsAdmin);
+api.get('/obtenerImagen/:img', ProductoController.obtenerPortada);
 
 module.exports = api;

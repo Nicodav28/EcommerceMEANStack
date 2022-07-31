@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/service/admin.service';
 import { ProductoService } from 'src/app/service/producto.service';
 declare var iziToast: any;
@@ -18,10 +19,12 @@ export class CreateProductoComponent implements OnInit {
   public imgSelected: any | ArrayBuffer = 'assets/img/01.jpg';
   public config: any = {};
   public token: any;
+  public loadBtn: boolean = false;
 
   constructor(
     private _productoService: ProductoService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _router: Router
   ) {
     this.token = _adminService.getToken();
     this.config = {
@@ -33,9 +36,9 @@ export class CreateProductoComponent implements OnInit {
   }
 
   itemRegister(itemRegisterForm){
+    this.loadBtn = true;
     if(itemRegisterForm.valid){
-      console.log(this.producto);
-
+      this.loadBtn = true;
       this._productoService.productRegister(this.producto, this.file, this.token).subscribe(
         response =>{
           console.log(response);
@@ -44,9 +47,12 @@ export class CreateProductoComponent implements OnInit {
             position: 'topRight',
             message: 'El producto ha sido registrado de manera exitosa'
           }); 
+          this.loadBtn = false;
+          this._router.navigate(['/panel/productos']);
         },
         error =>{
           console.log(error);
+          this.loadBtn = false;
         }
       );
     }else{
@@ -55,6 +61,7 @@ export class CreateProductoComponent implements OnInit {
         position: 'topRight',
         message: 'Hubo un error realizando el registro del producto'
       }); 
+      this.loadBtn = false;
     }
   }
 
