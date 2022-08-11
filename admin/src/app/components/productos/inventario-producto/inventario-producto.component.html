@@ -1,0 +1,106 @@
+<app-sidebar></app-sidebar>
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Inventario de Producto</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+        <p class="text-muted">Este módulo lista el inventario de un producto de la tienda.</p>
+        <p class="font-size-sm font-weight-medium pl-md-4"><a class="text-nowrap" [routerLink]="['/panel/productos']" rel="noopener">Regresar<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a></p>
+    </div>
+</div>
+
+<div class="card box-shadow-sm" *ngIf="producto == undefined">
+    <div class="card-body">
+        <h3 class="text-center">No se encontró el producto del cual se quiere ver el inventario o hubo un error en el sistema.</h3>
+    </div>
+</div>
+
+<div class="card box-shadow-sm" *ngIf="producto">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Inventario de {{producto.titulo}}</h5>
+    </div>
+    <div class="card-header">
+        <div class="row">
+            <div class="col-8">
+                <form class="form-inline">
+                    <div class="input-group">
+                        <label class="sr-only" for="inline-form-input-name">Cantidad</label>
+                        <input class="form-control mb-3 mr-sm-4" type="text" id="inline-form-input-name" name="cantidad" placeholder="Cantidad">
+                        <label class="sr-only" for="inline-form-input-username">Proveedor</label>
+                        <input class="form-control mr-3" type="text" id="inline-form-input-username" name="proveedor" placeholder="Proveedor">
+                        <button class="btn btn-primary mb-3" type="submit">Registrar Cantidad</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Admin</th>
+                        <th>Cantidad</th>
+                        <th>Proveedor</th>
+                        <th>Accion</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <ng-container *ngIf="invetarios.length == 0">
+                    <tbody>
+                        <tr>
+                            <td colspan="4" class="text-center">
+                                <span class="text-muted">No hay registros de inventario</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                <ng-container >
+                    <tbody *ngFor="let inventario of invetarios">
+                        <tr>
+                            <td>{{inventario.admin.nombres}} {{inventario.admin.apellidos}}</td>
+                            <td>{{inventario.cantidad}}</td>
+                            <td>{{inventario.proveedor}}</td>
+                            <td>{{inventario.accion}}</td>
+                            <td>
+                                <div class="text-center">
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal" [attr.data-target]="'#delete-'+inventario._id">
+                                        Borrar
+                                    </button>
+                                </div>
+                                <div class="modal fade" id="delete-{{inventario._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Confirmación de Eliminación</h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">Desea eliminar este registro?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button *ngIf="!loadBtn" class="btn btn-danger btn-sm" type="button" (click)="updateStockData(inventario._id);">Si, eliminar registro</button>
+                                            <button *ngIf="loadBtn" type="button" class="btn btn-secondary" disabled>
+                                                <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                                                Loading...
+                                            </button>
+                                            <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+
+            </table>
+        </div>
+    </div>
+    <!-- <div class="card-footer">
+        <ngb-pagination
+        [(page)] = "page"
+        [pageSize] = "pageSize" 
+        [collectionSize]="productos.length"
+        ></ngb-pagination>
+    </div> -->
+</div>

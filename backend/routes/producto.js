@@ -11,11 +11,16 @@ var multiparty = require('connect-multiparty');
 var pathImage = multiparty({uploadDir: './uploads/productos'})
 
 // Se crea ruta que al acceder ejecuta metodo registroCliente del controlador clienteController
+// Productos
 api.post('/registroProducto', [authJwt.auth, pathImage], ProductoController.registroProducto);
 api.get('/obtenerRegistros/:filtro?', [authJwt.auth], ProductoController.fetchProductsAdmin);
 api.get('/obtenerImagen/:img', ProductoController.obtenerPortada);
 api.get('/fetchProductId/:id', authJwt.auth, ProductoController.fetchProductId);
 api.put('/updateProductData/:id', [authJwt.auth, pathImage], ProductoController.updateProductData);
 api.delete('/deleteProduct/:id', authJwt.auth, ProductoController.deleteProduct);
+
+// Inventario
+api.get('/getInventory/:id', authJwt.auth, ProductoController.invetoryFetchAdmin);
+api.delete('/updateStockData/:id', authJwt.auth, ProductoController.deleteInventory);
 
 module.exports = api;

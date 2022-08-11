@@ -63,4 +63,16 @@ export class ProductoService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.delete(this.url + 'deleteProduct/'+ id, { headers: headers });
   }
+
+  // Inventario
+
+  invetoryFetchAdmin(id: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.get(this.url + 'getInventory/' + id, { headers: headers });
+  }
+
+  updateStockData(id: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.delete(this.url + 'updateStockData/' + id, { headers: headers });
+  }
 }
