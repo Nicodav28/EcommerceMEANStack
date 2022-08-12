@@ -1,0 +1,88 @@
+<app-sidebar></app-sidebar>
+<!-- Page title-->
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Cupones</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+        <p class="text-muted">Este módulo lista todos los cupones de la tienda.</p>
+        <p class="font-size-sm font-weight-medium pl-md-4"><a class="text-nowrap" [routerLink]="['/panel/cupones/registro']" rel="noopener">Registrar Nuevo Cupon<i class="cxi-angle-right font-size-base align-middle ml-1"></i></a></p>
+    </div>
+</div>
+
+<div class="card box-shadow-sm">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Filtro de Cupones</h5>
+    </div>
+    <div class="card-header">
+        <div class="row">
+            <div class="col-6">
+                <div class="input-group">
+                    <input class="form-control mr-3" type="text" placeholder="Buscar por codigo" name="filtro" [(ngModel)]="filtro">
+                    <button class="btn btn-primary" type="button" (click)="filterData()">Filtrar Cupon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Tipo</th>
+                        <th>Valor</th>
+                        <th>Limite</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="loadData == true">
+                    <tr>
+                        <td class="text-center" colspan="5">
+                            <div class="spinner-border m-2" style="width: 3rem; height: 3rem;" role="status">
+                                <span class="visually-hidden"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <ng-container *ngIf="info == false" >
+                    <tbody>
+                        <tr>
+                            <td class="text-center" colspan="5">
+                                <h3>No existen cupones con los caracteres ingresados.</h3>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+                <ng-container *ngIf="loadData != true && info == true">
+                    <tbody *ngFor="let cupon of cuponsList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+                        <tr>
+                            <td>{{cupon.codigo}}</td>
+                            <td>{{cupon.tipo}}</td>
+                            <td>{{cupon.valor}}</td>
+                            <td>{{cupon.limite}} restantes</td>
+                            <td>
+                                <div class="btn-group dropdown">
+                                    <button type="button" class="btn btn-outline-secondary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Opciones
+                                    </button>
+                                    <div class="dropdown-menu">
+                                      <a href="#" class="dropdown-item">Eliminar</a>
+                                      <div class="dropdown-divider"></div>
+                                      <a href="#" class="dropdown-item">Editar</a>
+                                    </div>
+                                  </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </ng-container>
+
+            </table>
+        </div>
+    </div>
+    <div class="card-footer">
+        <ngb-pagination
+        [(page)] = "page"
+        [pageSize] = "pageSize" 
+        [collectionSize]="cuponsList.length"
+        ></ngb-pagination>
+    </div>
+</div>

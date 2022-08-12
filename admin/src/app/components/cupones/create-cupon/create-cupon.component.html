@@ -1,0 +1,55 @@
+<app-sidebar></app-sidebar>
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Registro de Cupones</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+        <p class="text-muted">En este módulo registras los cupones de la tienda.</p>
+
+    </div>
+</div>
+
+<form #cuponRegisterForm="ngForm" (ngSubmit)="cuponRegister(cuponRegisterForm);">
+
+    <div class="card box-shadow-sm">
+        <div class="card-header">
+            <h5 style="margin-bottom: 0px;">Registro de Cupones</h5>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 form-group">
+                    <label for="validationCustom01" class="form-label">Codigo de Cupón</label>
+                    <input class="form-control" type="text" name="codigo" [(ngModel)]="cuponData.codigo"
+                        placeholder="Codigo del Cupon" required>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <label for="validationCustom01" class="form-label">Tipo de Cupón</label>
+                    <select class="form-control custom-select" name="tipo" [(ngModel)]="cuponData.tipo" required>
+                        <option value="" disabled selected>Seleccionar</option>
+                        <option value="Porcentaje">Porcentaje</option>
+                        <option value="Valor Fijo">Valor Fijo</option>
+                    </select>
+                </div>
+
+                <div class="col-lg-3 col-md-6 form-group">
+                    <label for="validationCustom01" class="form-label">Valor Descuento</label>
+                    <input class="form-control" type="number" name="valor" [(ngModel)]="cuponData.valor"
+                        placeholder="Valor del descuento" required>
+                </div>
+
+                <div class="col-lg-3 col-md-6 form-group">
+                    <label for="validationCustom01" class="form-label">Cantidad de cupones</label>
+                    <input class="form-control" type="number" name="limite" [(ngModel)]="cuponData.limite"
+                        placeholder="Limite maximo de cupones" required>
+                </div>
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <input *ngIf="!loadBtn" class="btn btn-primary mr-3" type="submit" value="Crear cupon">
+            <button *ngIf="loadBtn" type="button" class="btn btn-primary" disabled>
+                <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                Registrando
+            </button>
+            <a class="btn btn-warning" [routerLink]="['/panel/cupones']">Regresar</a>
+        </div>
+    </div>
+</form>
