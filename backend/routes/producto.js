@@ -22,5 +22,6 @@ api.delete('/deleteProduct/:id', authJwt.auth, ProductoController.deleteProduct)
 // Inventario
 api.get('/getInventory/:id', authJwt.auth, ProductoController.invetoryFetchAdmin);
 api.delete('/updateStockData/:id', authJwt.auth, ProductoController.deleteInventory);
+api.post('/createInventory', authJwt.auth, ProductoController.createInventory);
 
 module.exports = api;

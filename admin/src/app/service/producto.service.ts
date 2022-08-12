@@ -75,4 +75,9 @@ export class ProductoService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.delete(this.url + 'updateStockData/' + id, { headers: headers });
   }
+
+  createInventory(data: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.post(this.url + 'createInventory', data, { headers: headers });
+  }
 }

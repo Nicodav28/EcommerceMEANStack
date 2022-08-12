@@ -15,9 +15,11 @@ export class InventarioProductoComponent implements OnInit {
 
   public id: any;
   public token: any;
+  public _idUser: any;
   public producto: any = {};
   public invetarios: Array<any> = [];
   public loadBtn = false;
+  public inventoryData: any = {};
 
   constructor(
     private _route: ActivatedRoute,
@@ -25,6 +27,7 @@ export class InventarioProductoComponent implements OnInit {
     private _adminService: AdminService
   ) { 
     this.token = this._adminService.getToken();
+    this._idUser = localStorage.getItem('_id');
   }
 
   ngOnInit(): void {
@@ -84,11 +87,55 @@ export class InventarioProductoComponent implements OnInit {
         iziToast.error({
           title: 'Error:',
           position: 'topRight',
-          message: 'Hubo un error eliminando el producto'//error.message
+          message: 'Hubo un error eliminando el producto'
         });
         this.loadBtn = false;
       }
     );
+  }
+
+  registerInventory(inventoryForm: any){
+    if(inventoryForm.valid){
+      console.log(this.inventoryData);
+      let data = {
+        producto: this.producto._id,
+        cantidad: inventoryForm.value.cantidad,
+        admin: this._idUser,
+        proveedor: inventoryForm.value.proveedor
+      }
+
+      this._productoService.createInventory(data, this.token).subscribe(
+        response => {
+          iziToast.success({
+            title: 'Registro Exitoso:',
+            position: 'topRight',
+            message: 'El inventario fue registrado de manera exitosa.'
+          });
+          this._productoService.invetoryFetchAdmin(this.id, this.token).subscribe(
+            response => {
+              this.invetarios = response.data;
+              console.log(this.invetarios);
+            },
+            error => {
+              console.log(error);
+            }
+          );
+        },
+        error => {
+          iziToast.error({
+            title: 'Error:',
+            position: 'topRight',
+            message: 'Hubo un error registrando el producto.'
+          });
+        }
+      );
+    }else{
+      iziToast.error({
+        title: 'Error:',
+        position: 'topRight',
+        message: 'Los datos del formulario no son validos, por favor verifique la información ingresada.'//error.message
+      });
+    }
   }
 
 }
