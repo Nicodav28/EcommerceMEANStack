@@ -65,11 +65,28 @@
                                       Opciones
                                     </button>
                                     <div class="dropdown-menu">
-                                      <a href="#" class="dropdown-item">Eliminar</a>
+                                      <a class="dropdown-item" [routerLink]="['/panel/cupones', cupon._id]">Editar</a>
                                       <div class="dropdown-divider"></div>
-                                      <a href="#" class="dropdown-item">Editar</a>
+                                      <a class="dropdown-item" data-toggle="modal" style="cursor: pointer;" [attr.data-target]="'#delete-'+cupon._id">Eliminar</a>
                                     </div>
-                                  </div>
+                                </div>
+                                <div class="modal fade" id="delete-{{cupon._id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h4 class="modal-title">Eliminar el cupón {{cupon.codigo}}</h4>
+                                          <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                                        </div>
+                                        <div class="modal-body">
+                                          <p class="fs-sm">Esta seguro que desea eliminar el cupon <b>{{cupon.codigo}}</b>?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-danger btn-sm" type="button" (click)="deleteCupon(cupon._id)">Si, eliminar cupón</button>
+                                            <button class="btn btn-primary btn-sm" type="button" data-dismiss="modal">Cancelar</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
