@@ -25,7 +25,6 @@ const fetchCuponFilter = async function (req, res) {
 
             let getData = await cupon.find({ codigo: new RegExp(filtro, 'i') }).sort({createdAt: -1});
 
-            console.log(getData);
             res.status(200).send({ data: getData });
         } else {
             res.status(500).send({ message: 'ForbbidenAccess' });

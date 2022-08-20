@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AdminService } from 'src/app/service/admin.service';
 import { CuponService } from 'src/app/service/cupon.service';
 declare var iziToast: any;
@@ -22,7 +23,8 @@ export class IndexCuponComponent implements OnInit {
 
   constructor(
     private _cuponService: CuponService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _router: Router
   ) { 
     this.token = _adminService.getToken();
   }
@@ -83,12 +85,20 @@ export class IndexCuponComponent implements OnInit {
         this.loadData = false;
       },
       error => {
-        console.log(error);
-        iziToast.error({
+        if(error.status == 403 || error.status == 500){
+          iziToast.error({
           title: 'Error:',
+          class: 'text-danger',
           position: 'topRight',
-          message: 'Ha ocurrido un error verifique la conexion a su red o contactese con un administrador del sistema.'//error.message
+          message: 'La expirado la sesión o no cuenta con los permisos para acceder al modulo, será redireccionado al inicio de sesión'//error.message
         });
+
+        setTimeout(() => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('_id');
+          this._router.navigate(['/login']);
+        }, 3000);
+      }
       }
     )
   }

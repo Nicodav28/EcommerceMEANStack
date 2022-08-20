@@ -13,6 +13,7 @@ var clienteRoute = require('./routes/cliente');
 var adminRoute = require ('./routes/admin');
 var productoRoute = require('./routes/producto');
 var cuponRoute = require('./routes/cupon');
+var configRoute = require('./routes/config');
 
 // Usar variable de mongoose para hacer conexion con la base de datos 
 mongoose.connect('mongodb://127.0.0.1:27017/tienda',(err, res) => {
@@ -41,6 +42,7 @@ app.use('/api', clienteRoute);
 app.use('/api', adminRoute);
 app.use('/api', productoRoute);
 app.use('/api', cuponRoute);
+app.use('/api', configRoute);
 
 module.exports = app;
 

@@ -12,14 +12,14 @@ export class AdminService {
   public url: any;
 
   constructor(
-    private http: HttpClient,
+    private _http: HttpClient,
   ) {
     this.url = global.url;
   }
 
   loginAdmin(data: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.post(this.url + 'loginAdmin', data, { headers: headers });
+    return this._http.post(this.url + 'loginAdmin', data, { headers: headers });
   }
 
   getToken() {
@@ -51,5 +51,10 @@ export class AdminService {
     }
 
     return allowedRol.includes(decodedToken['rol']);
+  }
+
+  fetchConfigData(token: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.get(this.url + '/fetchConfigData',{ headers: headers });
   }
 }

@@ -96,8 +96,6 @@ const updateProductData = async function (req, res) {
                 var name = imgPath.split('\\');
                 var portadaName = name[2];
 
-                var checkQuantity = await producto.findById({ _id: id });
-                var quantity = checkQuantity.stock;
                 let update = await producto.findByIdAndUpdate({ _id: id }, {
                     titulo: data.titulo,
                     portada: portadaName,
