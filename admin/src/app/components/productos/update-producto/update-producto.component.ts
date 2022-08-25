@@ -23,6 +23,7 @@ export class UpdateProductoComponent implements OnInit {
   public token: any;
   public url: any;
   public file: File = undefined;
+  public configGlobal:any = {};
 
   constructor(
     private _productoService: ProductoService,
@@ -55,7 +56,16 @@ export class UpdateProductoComponent implements OnInit {
           }
         );
       }
-    )
+    );
+    
+    this._adminService.fetchCategories().subscribe(
+      response => {
+        this.configGlobal = response.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   updateItem(updateProductForm) {

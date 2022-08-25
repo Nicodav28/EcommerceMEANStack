@@ -20,19 +20,28 @@ export class CreateProductoComponent implements OnInit {
   public config: any = {};
   public token: any;
   public loadBtn: boolean = false;
+  public configGlobal:any = {};
 
   constructor(
     private _productoService: ProductoService,
     private _adminService: AdminService,
     private _router: Router
   ) {
-    this.token = _adminService.getToken();
+    this.token = this._adminService.getToken();
     this.config = {
       heigth: 500
     }
    }
 
   ngOnInit(): void {
+    this._adminService.fetchCategories().subscribe(
+      response => {
+        this.configGlobal = response.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
   itemRegister(itemRegisterForm){

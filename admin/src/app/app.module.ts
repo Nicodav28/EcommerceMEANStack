@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -52,7 +53,8 @@ import { ConfigComponent } from './components/config/config.component';
     NgbPaginationModule,
     NgxTinymceModule.forRoot({
 
-      baseURL: '../../../assets/tinymce/'    })
+      baseURL: '../../../assets/tinymce/'    }),
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

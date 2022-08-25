@@ -6,7 +6,7 @@ var secret = 'AXS28856';
 
 exports.auth = function(req, res, next){
     if(!req.headers.authorization){
-        return res.status(403).send({message: req.headers});
+        return res.status(403).send({message: req.headers, msg: 'NO TOKEN'});
     }
 
     var token = req.headers.authorization.replace(/['"]+/g,'');

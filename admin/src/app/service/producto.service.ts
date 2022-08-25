@@ -51,6 +51,9 @@ export class ProductoService {
       formData.append('contenido',data.contenido);
       formData.append('categoria',data.categoria);
       formData.append('portada', data.portada);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] +' '+JSON.stringify(pair[1])); 
+      }
 
       return this._http.put(this.url + 'updateProductData/'+ id, formData, { headers: headers });
     }else{

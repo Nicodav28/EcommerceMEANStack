@@ -55,6 +55,31 @@ export class AdminService {
 
   fetchConfigData(token: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
-    return this._http.get(this.url + '/fetchConfigData',{ headers: headers });
+    return this._http.get(this.url + 'fetchConfigData',{ headers: headers });
   }
+
+  updateConfig(data: any, id: any, token: any): Observable<any> {
+    if(data.logo){
+      let headers = new HttpHeaders({'Authorization': token});
+
+      const fd = new FormData();
+      fd.append('titulo',data.titulo);
+      fd.append('serie',data.serie);
+      fd.append('correlativo',data.correlativo);
+      fd.append('categorias',JSON.stringify(data.categorias));
+      fd.append('logo',data.logo);
+
+      return this._http.put(this.url + 'updateConfig/'+ id, fd,{ headers: headers });
+    }else{
+      let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+      return this._http.put(this.url + 'updateConfig/'+ id, data,{ headers: headers });
+    }
+  }
+
+  fetchCategories(): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url + 'fetchCategories',{ headers: headers });
+  }
+
+  
 }
