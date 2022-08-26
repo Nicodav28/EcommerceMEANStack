@@ -51,9 +51,6 @@ export class ProductoService {
       formData.append('contenido',data.contenido);
       formData.append('categoria',data.categoria);
       formData.append('portada', data.portada);
-      for (var pair of formData.entries()) {
-        console.log(pair[0] +' '+JSON.stringify(pair[1])); 
-      }
 
       return this._http.put(this.url + 'updateProductData/'+ id, formData, { headers: headers });
     }else{
@@ -87,5 +84,20 @@ export class ProductoService {
   updateProductVariety(id: any, data: any, token: any): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.put(this.url + 'updateProductVariety/' + id, data,{ headers: headers })
+  }
+
+  uploadProductGallery(id: any, data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders({'Authorization': token});
+
+    const formData = new FormData();
+    formData.append('_id',data._id);
+    formData.append('imagen',data.imagen);
+
+    return this._http.put(this.url + 'uploadProductGallery/'+ id, formData, { headers: headers });
+  }
+
+  deleteProductGallery(id: any, data: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.put(this.url + 'deleteProductGallery/' + id, data,{ headers: headers })
   }
 }

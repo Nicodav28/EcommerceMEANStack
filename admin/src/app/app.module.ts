@@ -25,6 +25,7 @@ import { IndexCuponComponent } from './components/cupones/index-cupon/index-cupo
 import { UpdateCuponComponent } from './components/cupones/update-cupon/update-cupon.component';
 import { ConfigComponent } from './components/config/config.component';
 import { VariedadProductoComponent } from './components/productos/variedad-producto/variedad-producto.component';
+import { GaleriaProductoComponent } from './components/productos/galeria-producto/galeria-producto.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { VariedadProductoComponent } from './components/productos/variedad-produ
     UpdateCuponComponent,
     ConfigComponent,
     VariedadProductoComponent,
+    GaleriaProductoComponent,
   ],
   imports: [
     BrowserModule,
