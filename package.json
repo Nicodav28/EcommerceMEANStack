@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@fortawesome/free-solid-svg-icons": "^6.1.2",
-    "@tinymce/tinymce-angular": "^7.0.0"
-  }
-}

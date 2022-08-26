@@ -244,13 +244,55 @@ const updateProductVariety = async function (req, res) {
         if (req.user.rol == 'admin') {
             var id = req.params['id'];
             var data = req.body;
-            console.log(data);
+            // console.log(data);
             var update = await producto.findByIdAndUpdate({ _id: id }, {
                 tituloVariedad: data.tituloVariedad,
                 variedades: data.variedades
             });
 
-            res.status(200).send({ data: update, message: 'Actualización sin imagen exitosa' });
+            res.status(200).send({ data: update, message: 'Ingeso de variedad exitosa' });
+
+        } else {
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    } else {
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const uploadProductGallery = async function (req, res) {
+    if (req.user) {
+        if (req.user.rol == 'admin') {
+            var id = req.params['id'];
+            var data = req.body;
+            
+            var imgPath = req.files.imagen.path;
+            var name = imgPath.split('\\');
+            var imageName = name[2];
+            // console.log(data);
+            let reg = await producto.findByIdAndUpdate({_id: id},{$push: {galeria:{
+                imagen: imageName,
+                _id: data._id
+            }}});
+            res.status(200).send({ data: reg, message: 'Carga de imagen exitosa' });
+
+        } else {
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    } else {
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const deleteProductGallery = async function (req, res) {
+    if (req.user) {
+        if (req.user.rol == 'admin') {
+            var id = req.params['id'];
+            var data = req.body;
+            
+            // console.log(data);
+            let reg = await producto.findByIdAndUpdate({_id: id},{$pull: {galeria:{_id:data._id}}});
+            res.status(200).send({ data: reg, message: 'Eliminación de imagen exitosa' });
 
         } else {
             res.status(500).send({ message: 'ForbbidenAccess' });
@@ -270,5 +312,7 @@ module.exports = {
     invetoryFetchAdmin,
     deleteInventory,
     createInventory,
-    updateProductVariety
+    updateProductVariety,
+    uploadProductGallery,
+    deleteProductGallery
 }
