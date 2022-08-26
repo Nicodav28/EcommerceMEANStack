@@ -83,4 +83,9 @@ export class ProductoService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.post(this.url + 'createInventory', data, { headers: headers });
   }
+
+  updateProductVariety(id: any, data: any, token: any): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.put(this.url + 'updateProductVariety/' + id, data,{ headers: headers })
+  }
 }

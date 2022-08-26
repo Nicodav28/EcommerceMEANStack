@@ -18,6 +18,7 @@ api.get('/obtenerImagen/:img', ProductoController.obtenerPortada);
 api.get('/fetchProductId/:id', authJwt.auth, ProductoController.fetchProductId);
 api.put('/updateProductData/:id', [authJwt.auth, pathImage], ProductoController.updateProductData);
 api.delete('/deleteProduct/:id', authJwt.auth, ProductoController.deleteProduct);
+api.put('/updateProductVariety/:id', authJwt.auth, ProductoController.updateProductVariety);
 
 // Inventario
 api.get('/getInventory/:id', authJwt.auth, ProductoController.invetoryFetchAdmin);

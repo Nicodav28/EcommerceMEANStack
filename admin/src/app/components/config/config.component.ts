@@ -99,7 +99,7 @@ export class ConfigComponent implements OnInit {
             title: 'Registro Exitoso:',
             class: 'text-danger',
             position: 'topRight',
-            message: 'La configuración ha sido actualizada exitosamente'//error.message
+            message: 'La configuración ha sido actualizada exitosamente.'//error.message
           });
         },
         error => {
@@ -180,4 +180,9 @@ export class ConfigComponent implements OnInit {
     this.configData.categorias.splice(idx, 1);
   }
 
+  getIcon(){
+    let icon = $("#icon").val();
+    $("#modalDefault .close").click()
+    this.iconCategory = icon;
+  }
 }

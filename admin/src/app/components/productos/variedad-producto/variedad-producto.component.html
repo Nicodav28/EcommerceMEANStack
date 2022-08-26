@@ -1,0 +1,94 @@
+<app-sidebar></app-sidebar>
+<div class="border-bottom pt-5 mt-2 mb-5">
+    <h1 class="mt-2 mt-md-4 mb-3 pt-5">Productos</h1>
+    <div class="d-flex flex-wrap flex-md-nowrap justify-content-between">
+      <p class="text-muted">En este módulo se establecen las variedades de los productos de la tienda.</p>
+    </div>
+  </div>
+
+  <div class="card box-shadow-sm">
+    <div class="card-header">
+        <h5 style="margin-bottom: 0px;">Variedad de Producto</h5>
+    </div>
+
+    <div class="card-body">
+      <div style="max-width: 48rem;">
+
+        <div class="row mb-5">
+          <div class="col-md-4" style="padding-right: 0px;">
+            <img [src]="url+'obtenerImagen/'+producto.portada" class="img-thumbnail" alt="Rounded image">
+          </div>
+          
+          <div class="col-md-8" style="padding-left: 0px;">
+            <div class="card" style=" height: 100% !important">
+              <div class="card-body">
+                <h3 class="card-product-title text-truncate mb-2">
+                  <a class="nav-link">{{producto.titulo}}</a>
+                  <p class="text-muted">{{producto.descripcion}}</p>
+                  <div class="d-flex align-items-center">
+                    <span class="h5 d-inline-block mb-0 text-danger">${{producto.precio}}</span>
+                  </div>
+                </h3>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row align-items-center">
+            <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Titulo de la Variedad</label>
+            <div class="input-group col-md-9">
+                <input class="form-control" type="text" placeholder="Titulo de la Variedad" name="tittleVariety" [(ngModel)]="producto.tituloVariedad">
+            </div>
+        </div>
+        <div class="form-group row align-items-center">
+          <label class="col-md-3 col-form-label font-weight-medium" for="text-input">Variedades</label>
+          <div class="col-md-9">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Nueva Variedad" name="newVariety" [(ngModel)]="newVariety">
+                &nbsp;  
+                <button class="btn btn-primary" type="button" (click)="addVariety();">Agregar</button>
+              </div>   
+          </div>
+          <div class="col-md-3">
+            
+          </div>
+          <div class="col-md-9">
+            <div class="table-responsive mt-3">
+              <table class="table table-sm" *ngIf="producto.variedades">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Titulo</th>
+                    <th>Eliminar</th>
+                  </tr>
+                </thead>
+                <ng-container *ngIf="producto.variedades.length == 0">
+                  <tbody>
+                    <td colspan="2" class="text-center">
+                      <span class="text-muted">No hay categorias disponibles</span>
+                    </td>
+                  </tbody>
+                </ng-container>
+                <ng-container *ngIf="producto.variedades.length >= 1">
+                  <tbody *ngFor="let variety of producto.variedades; let indice = index">
+                    <td>{{variety.titulo}}</td>
+                    <td>
+                        <a style="cursor: pointer; text-decoration: none;" class="btn btn-danger btn-sm" (click)="deleteVariety(indice)">Eliminar</a>
+                    </td>
+                  </tbody>
+                </ng-container>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <button *ngIf="!loadBtn" class="btn btn-success mr-3" type="button" (click)="updateVariety();">Guardar cambios</button>
+      <button *ngIf="loadBtn" type="button" class="btn btn-primary" disabled>
+        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+        Registrando
+    </button>
+    <a class="btn btn-warning" [routerLink]="['/panel/productos']">Regresar</a>
+    </div>
+</div>
+ 

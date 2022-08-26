@@ -40,10 +40,43 @@
             <input class="form-control" type="text" id="text-input" placeholder="Icono Categoria" name="iconCategory" [(ngModel)]="iconCategory" >
           </div>
           <div class="col-md-3">
-
+            
           </div>
           <div class="col-md-9">
+            <a style="cursor: pointer;" class="mb-5" data-toggle="modal" [attr.data-target]="'#modalDefault'">Ver lista de iconos</a>
+            <br>
             <a style="cursor: pointer;" class="mb-5" (click)="addCategory();">Agregar</a>
+            <!-- Icons Modal -->
+            <div class="modal fade" id="modalDefault" tabindex="-1" style="display: none;" aria-hidden="true">
+              <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Lista de iconos</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
+                  </div>
+                  <div class="modal-body">
+                    <p class="text-center">De clic al icono y este se ingresara automaticamente en el campo de Icono Categoria</p>
+                    <div class="container">
+                      <div class="row g-0">
+                        <div class="col-sm-3">
+                          <div class="text-center">
+                            <a style="cursor:pointer;" (click)="getIcon();">
+                            <i class="fa-regular fa-gem"></i>
+                            <p class="mb-2" id="iconFa">fa-regular fa-gem</p>
+                            <input type="text" id="icon" value="fa-regular fa-gem" hidden="true">
+                            </a>
+                          </div>
+                        </div>
+                        <span class="divider-vertical d-sm-block d-none"></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-primary btn-sm close" type="button" data-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="table-responsive mt-3">
               <table class="table table-sm" *ngIf="configData.categorias">
                 <thead class="thead-dark">
@@ -93,7 +126,6 @@
           
         </div>
       </div>
-     
     </div>
     <div class="card-footer">
       <button class="btn btn-success mr-3" type="submit">Guardar cambios</button>

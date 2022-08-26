@@ -239,6 +239,27 @@ const createInventory = async function (req, res) {
     }
 }
 
+const updateProductVariety = async function (req, res) {
+    if (req.user) {
+        if (req.user.rol == 'admin') {
+            var id = req.params['id'];
+            var data = req.body;
+            console.log(data);
+            var update = await producto.findByIdAndUpdate({ _id: id }, {
+                tituloVariedad: data.tituloVariedad,
+                variedades: data.variedades
+            });
+
+            res.status(200).send({ data: update, message: 'Actualización sin imagen exitosa' });
+
+        } else {
+            res.status(500).send({ message: 'ForbbidenAccess' });
+        }
+    } else {
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroProducto,
     fetchProductsAdmin,
@@ -248,5 +269,6 @@ module.exports = {
     deleteProduct,
     invetoryFetchAdmin,
     deleteInventory,
-    createInventory
+    createInventory,
+    updateProductVariety
 }
