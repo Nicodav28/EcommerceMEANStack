@@ -18,9 +18,8 @@
                 <div class="input-group">
                     <input class="form-control mr-3" type="text" placeholder="Titulo del Producto" name="filtro" [(ngModel)]="filtro">
                     <button class="btn btn-primary mr-3" type="button" (click)="filterProduct();">Filtrar</button>
-                    <button class="btn btn-warning" type="button" (click)="resetFilter();">Resetear Filtro</button>
-
-                  </div>
+                    <button class="btn btn-warning mr-3" type="button" (click)="resetFilter();">Resetear Filtro</button>                <button class="btn btn-success" (click)="downloadExcel();">Exportar a Excel</button>
+                </div>
             </div>
         </div>
     </div>

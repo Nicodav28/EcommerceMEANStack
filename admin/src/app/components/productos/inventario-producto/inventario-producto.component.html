@@ -28,6 +28,7 @@
                         <label class="sr-only" for="inline-form-input-username">Proveedor</label>
                         <input required class="form-control mr-3" type="text" id="inline-form-input-username" name="proveedor" placeholder="Proveedor" [(ngModel)]="inventoryData.proveedor">
                         <button class="btn btn-primary mb-3" type="submit">Registrar Cantidad</button>
+                        <button class="btn btn-success mb-3 ml-3" type="button" (click)="downloadExcel();">Exportar a Excel</button>
                     </div>
                 </form>
             </div>

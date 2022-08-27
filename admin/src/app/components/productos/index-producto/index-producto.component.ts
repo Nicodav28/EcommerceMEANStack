@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { AdminService } from 'src/app/service/admin.service';
 import { global } from 'src/app/service/global';
 import { ProductoService } from 'src/app/service/producto.service';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
+
 declare var iziToast: any;
 declare var jQuery: any;
 declare var $: any;
@@ -18,6 +21,7 @@ export class IndexProductoComponent implements OnInit {
   public filtro: any = '';
   public token: any;
   public productos: Array<any> = [];
+  public arrProductos: Array<any> = [];
   public url: string;
   public page = 1;
   public pageSize = 5;
@@ -41,7 +45,17 @@ export class IndexProductoComponent implements OnInit {
       response => {
         console.log(response);
         this.productos = response.data;
+        this.productos.forEach(element => {
+          this.arrProductos.push({
+            titulo: element.titulo,
+            stock: element.stock,
+            precio: element.precio,
+            categorio: element.categoria,
+            nventas: element.nventas
+          });
+        })
         this.loadData = false;
+        console.log(this.arrProductos);
       },
       error => {
         if(error.status == 403 || error.status == 500){
@@ -113,6 +127,37 @@ export class IndexProductoComponent implements OnInit {
         this.loadBtn = false;
       }
     );
+  }
+
+  downloadExcel(){
+    let workbook = new Workbook();
+    let worksheet = workbook.addWorksheet("Reporte de productos");
+
+    worksheet.addRow(undefined);
+    for (let x1 of this.arrProductos){
+      let x2=Object.keys(x1);
+
+      let temp=[]
+      for(let y of x2){
+        temp.push(x1[y])
+      }
+      worksheet.addRow(temp)
+    }
+
+    let fname='REP01- ';
+
+    worksheet.columns = [
+      { header: 'Producto', key: 'col1', width: 30},
+      { header: 'Stock', key: 'col2', width: 15},
+      { header: 'Precio', key: 'col3', width: 15},
+      { header: 'Categoria', key: 'col4', width: 25},
+      { header: 'N° ventas', key: 'col5', width: 15},
+    ]as any;
+
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      fs.saveAs(blob, fname+'-'+new Date().valueOf()+'.xlsx');
+    });
   }
 
 }
