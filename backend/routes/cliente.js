@@ -16,5 +16,6 @@ api.post('/registerClientAdmin', authJwt.auth, clienteController.registerClientA
 api.get('/obtenerClienteAdmin/:id', authJwt.auth, clienteController.fetchClientId);
 api.put('/actualizarClienteAdmin/:id', authJwt.auth, clienteController.updateClientData);
 api.delete('/eliminarClienteAdmin/:id', authJwt.auth, clienteController.deleteClient);
+api.get('/fetchClientIdGuest/:id', authJwt.auth, clienteController.fetchClientIdGuest);
 
 module.exports = api;

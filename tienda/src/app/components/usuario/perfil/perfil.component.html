@@ -1,0 +1,125 @@
+<app-nav></app-nav>
+
+<main  class="cs-page-wrapper">
+    <nav class="bg-secondary mb-3" aria-label="breadcrumb">
+        <div class="container">
+          <ol class="breadcrumb breadcrumb-alt mb-0">
+            <li class="breadcrumb-item">
+              <a [routerLink]="['/']" routerLinkActive="router-link-active" ><i class="cxi-home"></i></a>
+            </li>
+
+            <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+          </ol>
+        </div>
+      </nav>
+
+    <section class="container pt-3 pt-lg-4 pb-5 pb-lg-6">
+        <div class="row pb-2 pb-lg-0">
+
+          <!-- Account menu (sticky sidebar) -->
+        <aside class="col-xl-3 col-lg-4 pb-3 mb-4 mb-lg-0">
+            <app-sidebar></app-sidebar>
+        </aside>
+
+          <!-- Content -->
+          <div class="col-lg-8 ml-auto">
+            <div class="d-flex align-items-center justify-content-between mb-4 pb-1 pb-sm-3">
+              <h1 class="h2 mb-0">Mi Perfil</h1>
+            </div>
+            <form #updateForm="ngForm" (ngSubmit)="updateClientData(updateForm)">
+              <div class="row pb-3">
+                <div class="col-sm-6 form-group">
+                  <label for="ac-fn">Nombres</label>
+                  <input type="text"  class="form-control form-control-lg" name="nombres" [(ngModel)]="cliente.nombres" placeholder="Nombres Completos" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-ln">Apellidos</label>
+                  <input type="text" class="form-control form-control-lg" name="apellidos" [(ngModel)]="cliente.apellidos" placeholder="Apellidos Completos"required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-country">Pais</label>
+                  <select id="ac-country" class="custom-select custom-select-lg" required>
+                    <option value="" selected disabled>Seleccionar País</option>
+                    <option value="col">Colombia</option>
+                    <option value="mex">Mexico</option>
+                    <option value="belgium">Belgium</option>
+                    <option value="france">France</option>
+                    <option value="germany">Germany</option>
+                    <option value="uk">United Kingdom</option>
+                    <option value="usa">USA</option>
+                  </select>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-city">Ciudad</label>
+                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                    <option value="" disabled selected>Seleccionar Ciudad</option>
+                    <option value="belgium">Bogota</option>
+                    <option value="germany">Neiva</option>
+                    <option value="uk">London</option>
+                    <option value="argentina">Melbourne</option>
+                    <option value="usa">New Jersey</option>
+                    <option value="france">Paris</option>
+                    <option value="brazil">Rio de Janeiro</option>
+                  </select>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-address">Dirección</label>
+                  <input type="text" class="form-control form-control-lg" name="direccion" [(ngModel)]="cliente.direccion" placeholder="2464 Royal Ln. Mesa, New Jersey" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-email">Correo Electronico</label>
+                  <input type="email"  class="form-control form-control-lg" name="email" [(ngModel)]="cliente.email" placeholder="correo@ejemplo.com" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-password">Contraseña</label>
+                  <div class="cs-password-toggle input-group-overlay">
+                    <input type="password"class="form-control form-control-lg" name="password" [(ngModel)]="cliente.password" placeholder="Contraseña" required>
+                    <div class="input-group-append-overlay">
+                      <label class="btn cs-password-toggle-btn input-group-text">
+                        <input type="checkbox" class="custom-control-input" required>
+                        <i class="cxi-eye cs-password-toggle-indicator"></i>
+                        <span class="sr-only">Mostrar Contraseña</span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-phone">Celular</label>
+                  <input type="text" class="form-control form-control-lg" name="telefono" [(ngModel)]="cliente.telefono" placeholder="+57 300 123 4567" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-phone">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control form-control-lg" name="f_nacimiento" [(ngModel)]="cliente.f_nacimiento" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-city">Tipo de DNI</label>
+                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                    <option value="" disabled selected>Seleccionar tipo DNI</option>
+                    <option value="cc">CC</option>
+                    <option value="pass">PASS</option>
+                    <option value="pep">PEP</option>
+                  </select>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-phone">DNI</label>
+                  <input type="text" class="form-control form-control-lg" name="dni" [(ngModel)]="cliente.dni" placeholder="123456789" required>
+                </div>
+                <div class="col-sm-6 form-group">
+                  <label for="ac-city">Genero</label>
+                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                    <option value="" disabled selected>Seleccionar Genero</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                    <option value="N/A">Prefiero no decirlo</option>
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-lg">&nbsp;Actualizar Perfil&nbsp;</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+</main>
+
+<app-footeer></app-footeer>

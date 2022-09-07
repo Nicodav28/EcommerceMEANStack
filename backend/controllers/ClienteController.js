@@ -173,6 +173,20 @@ const deleteClient = async function (req, res) {
     }
 }
 
+const fetchClientIdGuest = async function(req, res){
+    if(req.user){
+        var id = req.params['id'];
+        try {
+            var reg = await cliente.findById({_id:id});
+            res.status(200).send({ data: reg });
+        } catch (error) {
+            res.status(200).send({ data: undefined });
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroCliente,
     loginCliente,
@@ -180,5 +194,6 @@ module.exports = {
     registerClientAdmin,
     fetchClientId,
     updateClientData,
-    deleteClient
+    deleteClient,
+    fetchClientIdGuest
 }
