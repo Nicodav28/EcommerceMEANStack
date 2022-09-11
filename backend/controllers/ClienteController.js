@@ -187,6 +187,54 @@ const fetchClientIdGuest = async function(req, res){
     }
 }
 
+const updateClientGuest = async function(req, res){
+    if(req.user){
+        var id = req.params['id'];
+        var data = req.body;
+
+        console.log(data);
+        
+        if(data.password){
+            console.log('CON Contraseña');
+            bcrypt.hash(data.password,null,null, async function(err,hash){
+                var reg = await cliente.findByIdAndUpdate({_id:id},{
+                    nombres: data.nombres,
+                    apellidos: data.apellidos,
+                    pais: data.pais,
+                    ciudad: data.ciudad,
+                    direccion: data.direccion,
+                    password: hash,
+                    telefono: data.telefono,
+                    genero: data.genero,
+                    f_nacimiento: data.f_nacimiento,
+                    dni: data.dni,
+                    tipo_dni: data.tipo_dni
+                });
+
+                res.status(200).send({ data: data, message: "ACTUALIZADO" })
+            });
+        }else{
+            console.log(' SIN Contraseña');
+            var reg = await cliente.findByIdAndUpdate({_id:id},{
+                nombres: data.nombres,
+                apellidos: data.apellidos,
+                pais: data.pais,
+                ciudad: data.ciudad,
+                direccion: data.direccion,
+                telefono: data.telefono,
+                genero: data.genero,
+                f_nacimiento: data.f_nacimiento,
+                dni: data.dni,
+                tipo_dni: data.tipo_dni
+            });
+
+            res.status(200).send({ data: data, message: "ACTUALIZADO" })
+        }
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     registroCliente,
     loginCliente,
@@ -195,5 +243,6 @@ module.exports = {
     fetchClientId,
     updateClientData,
     deleteClient,
-    fetchClientIdGuest
+    fetchClientIdGuest,
+    updateClientGuest
 }

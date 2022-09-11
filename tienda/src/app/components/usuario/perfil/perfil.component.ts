@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 declare var iziToast: any;
+declare var $:any;
 
 @Component({
   selector: 'app-perfil',
@@ -34,7 +35,19 @@ export class PerfilComponent implements OnInit {
 
   updateClientData(updateForm: any){
     if(updateForm.valid){
-      console.log(this.cliente);
+      this.cliente.password = $('#inputPassword').val();
+      this._clientService.updateClientGuest(this.id, this.token, this.cliente).subscribe(
+        response => {
+          iziToast.success({
+            title: 'Actualización Exitosa:',
+            position: 'topRight',
+            message: 'El perfil ha sido actualizado exitosamente.'
+          });
+        },
+        error => {
+          console.log(error);
+        }
+      );
     }else{
       iziToast.error({
         title: 'Error Actualizando Datos:',

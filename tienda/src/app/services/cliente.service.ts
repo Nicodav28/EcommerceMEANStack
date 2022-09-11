@@ -23,7 +23,12 @@ export class ClienteService {
 
   fetchClientIdGuest(id: any, token: any): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application').set('Authorization', token);
-    return this._http.get(this.url + 'fetchClientIdGuest/' + id, {headers: headers})
+    return this._http.get(this.url + 'fetchClientIdGuest/' + id, {headers: headers});
+  }
+
+  updateClientGuest(id: any, token: any, data: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.put(this.url + '/updateClientGuest/' + id, data, {headers: headers});
   }
 
 }

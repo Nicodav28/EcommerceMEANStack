@@ -38,28 +38,28 @@
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-country">Pais</label>
-                  <select id="ac-country" class="custom-select custom-select-lg" required>
+                  <select id="ac-country" class="custom-select custom-select-lg" name="pais" [(ngModel)]="cliente.pais" required>
                     <option value="" selected disabled>Seleccionar País</option>
-                    <option value="col">Colombia</option>
-                    <option value="mex">Mexico</option>
-                    <option value="belgium">Belgium</option>
-                    <option value="france">France</option>
-                    <option value="germany">Germany</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="usa">USA</option>
+                    <option value="COL">Colombia</option>
+                    <option value="MEX">Mexico</option>
+                    <option value="BELGIUM">Belgium</option>
+                    <option value="FRANCE">France</option>
+                    <option value="GERMANY">Germany</option>
+                    <option value="UK">United Kingdom</option>
+                    <option value="USA">USA</option>
                   </select>
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-city">Ciudad</label>
-                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                  <select id="ac-city" class="custom-select custom-select-lg" name="ciudad" [(ngModel)]="cliente.ciudad" required>
                     <option value="" disabled selected>Seleccionar Ciudad</option>
-                    <option value="belgium">Bogota</option>
-                    <option value="germany">Neiva</option>
-                    <option value="uk">London</option>
-                    <option value="argentina">Melbourne</option>
-                    <option value="usa">New Jersey</option>
-                    <option value="france">Paris</option>
-                    <option value="brazil">Rio de Janeiro</option>
+                    <option value="BOG">Bogota</option>
+                    <option value="NEIVA">Neiva</option>
+                    <option value="LONDON">London</option>
+                    <option value="MELBOURNE">Melbourne</option>
+                    <option value="NEW JERSEY">New Jersey</option>
+                    <option value="PARIS">Paris</option>
+                    <option value="RIO DE JANEIRO">Rio de Janeiro</option>
                   </select>
                 </div>
                 <div class="col-sm-6 form-group">
@@ -68,12 +68,12 @@
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-email">Correo Electronico</label>
-                  <input type="email"  class="form-control form-control-lg" name="email" [(ngModel)]="cliente.email" placeholder="correo@ejemplo.com" required>
+                  <input disabled readonly type="email"  class="form-control form-control-lg" value="{{cliente.email}}" placeholder="correo@ejemplo.com" required>
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-password">Contraseña</label>
                   <div class="cs-password-toggle input-group-overlay">
-                    <input type="password"class="form-control form-control-lg" name="password" [(ngModel)]="cliente.password" placeholder="Contraseña" required>
+                    <input type="password" autocomplete="new-password" class="form-control form-control-lg" id="inputPassword" placeholder="Contraseña">
                     <div class="input-group-append-overlay">
                       <label class="btn cs-password-toggle-btn input-group-text">
                         <input type="checkbox" class="custom-control-input" required>
@@ -93,7 +93,7 @@
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-city">Tipo de DNI</label>
-                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                  <select id="ac-city" class="custom-select custom-select-lg" name="tipo_dni" [(ngModel)]="cliente.tipo_dni" required>
                     <option value="" disabled selected>Seleccionar tipo DNI</option>
                     <option value="cc">CC</option>
                     <option value="pass">PASS</option>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="col-sm-6 form-group">
                   <label for="ac-city">Genero</label>
-                  <select id="ac-city" class="custom-select custom-select-lg" required>
+                  <select id="ac-city" class="custom-select custom-select-lg" name="genero" [(ngModel)]="cliente.genero" required>
                     <option value="" disabled selected>Seleccionar Genero</option>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
