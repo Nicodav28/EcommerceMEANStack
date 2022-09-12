@@ -190,12 +190,8 @@ const fetchClientIdGuest = async function(req, res){
 const updateClientGuest = async function(req, res){
     if(req.user){
         var id = req.params['id'];
-        var data = req.body;
-
-        console.log(data);
-        
+        var data = req.body;      
         if(data.password){
-            console.log('CON Contraseña');
             bcrypt.hash(data.password,null,null, async function(err,hash){
                 var reg = await cliente.findByIdAndUpdate({_id:id},{
                     nombres: data.nombres,
@@ -214,7 +210,6 @@ const updateClientGuest = async function(req, res){
                 res.status(200).send({ data: data, message: "ACTUALIZADO" })
             });
         }else{
-            console.log(' SIN Contraseña');
             var reg = await cliente.findByIdAndUpdate({_id:id},{
                 nombres: data.nombres,
                 apellidos: data.apellidos,

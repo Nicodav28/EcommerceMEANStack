@@ -39,18 +39,18 @@
             <ul class="dropdown-menu">
               <li class="nav-item dropdown">
                 <a [routerLink]="['cuenta/perfil']" routerLinkActive="active"  class="dropdown-item">
-                  <i class="ci-profile me-2"></i>
+                  <i class="cxi-profile me-2"></i>
                   Perfil
                   <!-- <span class="badge rounded-pill bg-danger ms-2">3</span> -->
                 </a>
                 <a href="#" class="dropdown-item">
-                  <i class="ci-comment me-2"></i>
+                  <i class="cxi-comment me-2"></i>
                   Mensajes
                   <span class="badge rounded-pill bg-success ms-2">5</span>
                 </a>
-                <a href="#" class="dropdown-item">
-                  <i class="ci-external-link me-2"></i>
-                  Configuración
+                <a class="dropdown-item" style="cursor: pointer;" (click)="logoutGuest()">
+                  <i class="cxi-logout me-2"></i>
+                  Cerrar Sesión
                   <!-- <span class="badge rounded-pill bg-warning ms-2">1</span> -->
                 </a>
               </li>

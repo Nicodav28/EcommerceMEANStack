@@ -20,14 +20,7 @@ export class PerfilComponent implements OnInit {
   ) { 
     this.id = localStorage.getItem('_id');
     this.token = localStorage.getItem('token');
-
-    if(this.id != undefined && this.token != undefined){
-      this._clientService.fetchClientIdGuest(this.id, this.token).subscribe(
-        response => {
-          this.cliente = response.data;
-        }
-      );
-    }
+    this.initData();
   }
 
   ngOnInit(): void {
@@ -43,6 +36,7 @@ export class PerfilComponent implements OnInit {
             position: 'topRight',
             message: 'El perfil ha sido actualizado exitosamente.'
           });
+          this.initData();
         },
         error => {
           console.log(error);
@@ -54,6 +48,16 @@ export class PerfilComponent implements OnInit {
         position: 'topRight',
         message: 'Los datos ingresados no son validos.'
       });
+    }
+  }
+
+  initData(){
+    if(this.id != undefined && this.token != undefined){
+      this._clientService.fetchClientIdGuest(this.id, this.token).subscribe(
+        response => {
+          this.cliente = response.data;
+        }
+      );
     }
   }
 

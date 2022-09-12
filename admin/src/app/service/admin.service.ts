@@ -38,15 +38,17 @@ export class AdminService {
       const helper = new JwtHelperService();
       var decodedToken = helper.decodeToken(token);
 
+      if(helper.isTokenExpired(token)){
+        localStorage.clear();
+        return false;
+      }
       // console.log(decodedToken);
       if (!decodedToken) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('_id');
+        localStorage.clear();
         return false;
       }
     }catch(error){
-      localStorage.removeItem('token');
-      localStorage.removeItem('_id');
+      localStorage.clear();
       return false;
     }
 

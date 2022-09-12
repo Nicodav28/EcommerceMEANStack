@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 
+declare var iziToast: any;
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -13,7 +15,8 @@ export class NavComponent implements OnInit {
   public userLc: any = {};
   
   constructor(
-    private _clientService: ClienteService
+    private _clientService: ClienteService,
+    private _router: Router
   ) { 
     this.token = localStorage.getItem('token');
     this.id = localStorage.getItem('_id');
@@ -41,6 +44,16 @@ export class NavComponent implements OnInit {
     }else{
       this.userLc = undefined;
     }
+  }
+
+  logoutGuest(){
+    iziToast.info({
+      title: 'Sesión cerrada:',
+      position: 'bottomRight',
+      message: 'Se ha cerrado la sesión con exito'
+    });
+    localStorage.clear();
+    this._router.navigate(['/']);
   }
 
 }
