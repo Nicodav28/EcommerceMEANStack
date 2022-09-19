@@ -6,6 +6,8 @@
   <title>Tienda</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="msapplication-TileColor" content="#766df4">
+  <meta name="theme-color" content="#ffffff">
   <!-- Favicon and Touch Icons-->
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
@@ -13,8 +15,6 @@
   <link rel="manifest" href="assets/img/site.webmanifest">
   <link rel="mask-icon" color="#5bbad5" href="assets/img/safari-pinned-tab.svg">
   <link rel="stylesheet" href="assets/css/iziToast.min.css">
-  <meta name="msapplication-TileColor" content="#766df4">
-  <meta name="theme-color" content="#ffffff">
 
   <!-- Vendor Styles-->
   <link rel="stylesheet" media="screen" href="assets/vendor/tiny-slider/dist/tiny-slider.css" />
@@ -22,7 +22,53 @@
   <!-- Main Theme Styles + Bootstrap-->
   <link rel="stylesheet" media="screen" href="assets/css/demo/ecommerce/theme.min.css">
 
+  <!-- No UI Slider -->
+  <link rel="stylesheet" href="assets/css/nouislider.min.css">
+
+  <!-- Simplebar -->
+  <link rel="stylesheet" href="assets/css/simplebar.min.css">
+
+  <!-- Vendor scripts: js libraries and plugins-->
+  <script src="assets/vendor/jquery/dist/jquery.slim.min.js"></script>
+  <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+  <script src="assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
+ 
+  <!-- Main theme script-->
+  <script src="assets/js/theme.min.js"></script>
+ 
+  <!-- IziToast -->
+  <script src="assets/js/iziToast.min.js"></script>
+
+  <!--  No UI Slider-->
+  <script src="assets/js/nouislider.min.js"></script>
+
+  <!-- Simplebar -->
+  <script src="assets/js/simplebar.min.js"></script>
+
+  <!-- Sticky Sidebar -->
+  <script src="assets/js/sticky-sidebar.min.js"></script>
+
   <style>
+        .cs-range-slider-ui .noUi-handle {
+        top: 50% !important;
+        width: .875rem !important;
+        height: .875rem !important;
+        margin-top: -.4375rem !important;
+        border: 2px solid #fff !important;
+        border-radius: 50% !important;
+        box-shadow: none !important;
+        background-color: #17696a !important;
+    }
+    
+    .cs-range-slider-ui {
+        height: .125rem !important;
+        margin: 3rem 0 !important;
+        border: 0 !important;
+        background-color: #dadbdd !important;
+        box-shadow: none !important;
+    }
+
     .pagination {
       margin-bottom: 0px;
     }
@@ -85,6 +131,28 @@
       animation: spinner .75s linear infinite;
     }
 
+    .cs-demo-switcher {
+      position: fixed;
+      display: block;
+      top: 50%;
+      right: 1rem;
+      z-index: 100;
+    }
+
+    .cs-demo-switcher-inner {
+      width: 3rem;
+      height: 3rem;
+      border: 1px solid #e5e8ed;
+      border-radius: 50%;
+      background-color: #fff;
+      color: #1e212c;
+      font-size: 1.25rem;
+      line-height: 3rem;
+      text-align: center;
+      text-decoration: none;
+      box-shadow: 0px 10px 15px 0px rgba(30, 33, 44, 0.10);
+    }
+
     @-webkit-keyframes spinner {
       0% {
         -webkit-transform: scale(0);
@@ -110,6 +178,8 @@
         transform: none;
       }
     }
+
+    
   </style>
 
   <!-- Page loading scripts-->
@@ -124,31 +194,6 @@
       };
     })();
   </script>
-
-  <!-- Demo switcher off-canvas toggle styles -->
-  <style>
-    .cs-demo-switcher {
-      position: fixed;
-      display: block;
-      top: 50%;
-      right: 1rem;
-      z-index: 100;
-    }
-
-    .cs-demo-switcher-inner {
-      width: 3rem;
-      height: 3rem;
-      border: 1px solid #e5e8ed;
-      border-radius: 50%;
-      background-color: #fff;
-      color: #1e212c;
-      font-size: 1.25rem;
-      line-height: 3rem;
-      text-align: center;
-      text-decoration: none;
-      box-shadow: 0px 10px 15px 0px rgba(30, 33, 44, 0.10);
-    }
-  </style>
 
 </head>
 
@@ -169,17 +214,7 @@
   </a>
 
 
-  <!-- Vendor scripts: js libraries and plugins-->
-  <script src="assets/vendor/jquery/dist/jquery.slim.min.js"></script>
-  <script src="assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
-  <script src="assets/vendor/tiny-slider/dist/min/tiny-slider.js"></script>
-
-  <!-- Main theme script-->
-  <script src="assets/js/theme.min.js"></script>
-
-  <!-- IziToast -->
-  <script src="assets/js/iziToast.min.js"></script>
+ 
 </body>
 
 </html>

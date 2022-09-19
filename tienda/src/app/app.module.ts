@@ -13,6 +13,7 @@ import { FooteerComponent } from './components/footeer/footeer.component';
 import { LoginComponent } from './components/login/login.component';
 import { PerfilComponent } from './components/usuario/perfil/perfil.component';
 import { SidebarComponent } from './components/usuario/sidebar/sidebar.component';
+import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { SidebarComponent } from './components/usuario/sidebar/sidebar.component
     FooteerComponent,
     LoginComponent,
     PerfilComponent,
-    SidebarComponent
+    SidebarComponent,
+    IndexProductoComponent
   ],
   imports: [
     BrowserModule,
