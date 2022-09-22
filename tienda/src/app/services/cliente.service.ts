@@ -65,4 +65,9 @@ export class ClienteService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.get(this.url + 'fetchCategories',{ headers: headers });
   }
+
+  fetchProducts(filtro: any){
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this._http.get(this.url + 'fetchProductsGuest/' + filtro,{ headers: headers });
+  }
 }

@@ -13,6 +13,7 @@ export class NavComponent implements OnInit {
   public id: any;
   public userData: any = undefined;
   public userLc: any = {};
+  public categories: any = {};
   
   constructor(
     private _clientService: ClienteService,
@@ -33,6 +34,8 @@ export class NavComponent implements OnInit {
         }
       );
     }
+
+    this.initData();
   }
 
   ngOnInit(): void {
@@ -54,6 +57,17 @@ export class NavComponent implements OnInit {
     });
     localStorage.clear();
     this._router.navigate(['/']);
+  }
+
+  initData() {
+    this._clientService.fetchCategories().subscribe(
+      response => {
+        this.categories = response.data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }

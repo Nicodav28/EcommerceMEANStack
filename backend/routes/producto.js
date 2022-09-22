@@ -27,4 +27,7 @@ api.get('/getInventory/:id', authJwt.auth, ProductoController.invetoryFetchAdmin
 api.delete('/updateStockData/:id', authJwt.auth, ProductoController.deleteInventory);
 api.post('/createInventory', authJwt.auth, ProductoController.createInventory);
 
+// Publicos
+api.get('/fetchProductsGuest/:filtro?', ProductoController.fetchProductsGuest);
+
 module.exports = api;

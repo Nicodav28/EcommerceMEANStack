@@ -302,6 +302,16 @@ const deleteProductGallery = async function (req, res) {
     }
 }
 
+
+// PUBLICOS
+
+const fetchProductsGuest = async function (req, res) {
+    var filtro = req.params['filtro'];
+
+            let getData = await producto.find({ titulo: new RegExp(filtro, 'i') });
+            res.status(200).send({ data: getData });
+}
+
 module.exports = {
     registroProducto,
     fetchProductsAdmin,
@@ -314,5 +324,6 @@ module.exports = {
     createInventory,
     updateProductVariety,
     uploadProductGallery,
-    deleteProductGallery
+    deleteProductGallery,
+    fetchProductsGuest
 }

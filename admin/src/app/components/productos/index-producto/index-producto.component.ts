@@ -24,7 +24,7 @@ export class IndexProductoComponent implements OnInit {
   public arrProductos: Array<any> = [];
   public url: string;
   public page = 1;
-  public pageSize = 5;
+  public pageSize = 10;
   public loadBtn: boolean = false;
 
   constructor(
