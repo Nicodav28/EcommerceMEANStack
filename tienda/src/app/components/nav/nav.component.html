@@ -95,7 +95,9 @@
           <li class="nav-item dropdown">
             <a [routerLink]="['/productos']" class="nav-link dropdown-toggle" data-toggle="dropdown">Tienda</a>
             <ul class="dropdown-menu">
-              <li *ngFor="let category of categories.categorias"><a href="shop-catalog.html" class="dropdown-item"><i class="{{category.icono}}"></i> &nbsp; {{category.titulo}}</a></li>
+              <li *ngFor="let category of categories.categorias">
+                <a [routerLink]="['/productos/categoria/',category.titulo.toLowerCase()]" routerLinkActive="router-link-active"  class="dropdown-item"><i class="{{category.icono}}"></i> &nbsp; {{category.titulo}}</a>
+              </li>
             </ul>
           </li>
           <li class="nav-item dropdown mega-dropdown">
