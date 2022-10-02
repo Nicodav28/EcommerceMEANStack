@@ -25,6 +25,9 @@ export class IndexProductoComponent implements OnInit {
   public routeCategory: any;
   public min: number = 0;
   public max: number = 6000000;
+  public page: number = 1;
+  public pageSize: number = 10;
+
 
   constructor(
     private _clienteService: ClienteService,
