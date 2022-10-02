@@ -16,28 +16,29 @@ declare var $: any;
 
 export class ConfigComponent implements OnInit {
   public token: any;
-  public configData: any = {};
+  public configData?: any = {};
   public tittleCategory: any = '';
   public iconCategory: any = '';
   public idTemp: any = "62f9cb1ae2d64bbb13c3ab00";
   public imgSelected: String | ArrayBuffer;
   public file: File = undefined;
   public url: any;
-
-
+  public icons: Array <any> = [];
+  public indice: any;
 
   constructor(
     private _adminService: AdminService,
     private _router: Router
     ) { 
       this.token = _adminService.getToken();
+      this.icons = ["cxi-iphone", "cxi-home", "cxi-hanger", "cxi-bag", "fa-regular fa-gem"];
     }
 
   ngOnInit(): void {
     this.url = global.url;
     this._adminService.fetchConfigData(this.token).subscribe(
       response => {
-        // console.log(response.data);
+        console.log(response.data);
         this.configData = response.data;
         this.imgSelected = this.url+'fetchConfigImage/'+this.configData.logo;
       },
@@ -180,9 +181,13 @@ export class ConfigComponent implements OnInit {
     this.configData.categorias.splice(idx, 1);
   }
 
-  getIcon(){
-    let icon = $("#icon").val();
-    $("#modalDefault .close").click()
-    this.iconCategory = icon;
-  }
+  // getIcon(){
+  //   // let iconId = JSON.stringify(this.icons[indice]);
+  //   // let result = iconId.replace('"', "");
+  //   // let resultDos = result.replace('"', "");
+  //   // var icon = $("#icon"+resultDos).val();
+  //   // $("#modalDefault .close").click()
+  //   // this.iconCategory = icon;
+  //   alert(this.indice);
+  // }
 }

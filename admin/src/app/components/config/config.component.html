@@ -58,12 +58,12 @@
                     <p class="text-center">De clic al icono y este se ingresara automaticamente en el campo de Icono Categoria</p>
                     <div class="container">
                       <div class="row g-0">
-                        <div class="col-sm-3">
+                        <div class="col-sm-3" *ngFor="let icon of icons">
                           <div class="text-center">
-                            <a style="cursor:pointer;" (click)="getIcon();">
-                            <i class="fa-regular fa-gem"></i>
-                            <p class="mb-2" id="iconFa">fa-regular fa-gem</p>
-                            <input type="text" id="icon" value="fa-regular fa-gem" hidden="true">
+                            <a style="cursor:pointer;">
+                              <i class="{{icon}}"></i>
+                              <p class="mb-2" id="iconFa">{{icon}}</p>
+                              <input type="text" id="icon{{icon}}" value="{{icon}}" hidden>
                             </a>
                           </div>
                         </div>

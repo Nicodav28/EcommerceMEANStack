@@ -1,3 +1,4 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { global } from 'src/app/services/global';
@@ -19,6 +20,7 @@ export class IndexProductoComponent implements OnInit {
   public filtro: any = "";
   public loadData = true;
   public url: string;
+  public categoryFilter = "todos";
 
   constructor(
     private _clienteService: ClienteService
@@ -32,16 +34,16 @@ export class IndexProductoComponent implements OnInit {
     var slider : any = document.getElementById('slider');
 
     noUiSlider.create(slider, {
-        start: [0, 1000],
+        start: [0, 6000000],
         connect: true,
         range: {
             'min': 0,
-            'max': 1000
+            'max': 6000000
         },
         tooltips: [true,true],
         pips: {
           mode: 'count', 
-          values: 5,
+          values: 6,
           
         }
     })
@@ -100,7 +102,50 @@ export class IndexProductoComponent implements OnInit {
       }
     );
 
+  }
 
+  priceFilter(){
+    this._clienteService.fetchProducts(this.filtro).subscribe(
+      response => {
+        //@ts-ignore
+        this.products = response.data;
+
+        console.log(this.products);
+        
+        let min = parseInt($('.cs-range-slider-value-min').val());
+        let max = parseInt($('.cs-range-slider-value-max').val());
+    
+        this.products = this.products.filter((product) => {
+          return product.precio >= min && product.precio <= max;
+        });
+
+      }
+  );
+   
+  }
+
+  searchByCategory(){
+    console.log(this.categoryFilter);
+    if(this.categoryFilter == 'todos'){
+      this._clienteService.fetchProducts(this.filtro).subscribe(
+        response => {
+          //@ts-ignore
+          this.products = response.data;
+          this.loadData =  false;
+        }
+      );
+    }else{
+
+      this._clienteService.fetchProducts(this.filtro).subscribe(
+        response => {
+          //@ts-ignore
+          this.products = response.data;
+          this.products = this.products.filter((product) => {
+            return product.categoria == this.categoryFilter;
+          });
+        }
+      );
+    }
   }
 
 }
