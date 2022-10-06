@@ -26,8 +26,8 @@ export class IndexProductoComponent implements OnInit {
   public min: number = 0;
   public max: number = 6000000;
   public page: number = 1;
-  public pageSize: number = 10;
-
+  public pageSize: number = 12;
+  public sortBy: any = 'Defecto';
 
   constructor(
     private _clienteService: ClienteService,
@@ -180,6 +180,70 @@ export class IndexProductoComponent implements OnInit {
         this.loadData = false;
       }
     );
+  }
+
+  orderItemsBy(){
+    if(this.sortBy == 'Defecto'){
+      this._clienteService.fetchProducts('').subscribe(
+        response => {
+          //@ts-ignore
+          this.products = response.data;
+          this.loadData = false;
+        }
+      );
+    }else if(this.sortBy == 'Popularidad'){
+      this.products.sort(function(a: any, b: any){
+        if(a.nventas < b.nventas){
+          return 1;
+        }else if(a.nventas > b.nvevtas){
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+    }else if(this.sortBy == 'hlprecio'){
+      this.products.sort(function(a: any, b: any){
+        if(a.precio < b.precio){
+          return 1;
+        }else if(a.precio > b.precio){
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+    }else if(this.sortBy == 'lhprecio'){
+      this.products.sort(function(a: any, b: any){
+        if(a.precio > b.precio){
+          return 1;
+        }else if(a.precio < b.precio){
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+    }else if(this.sortBy == 'azOrder'){
+      this.products.sort(function(a: any, b: any){
+        if(a.titulo > b.titulo){
+          return 1;
+        }else if(a.titulo < b.titulo){
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+    }else if(this.sortBy == 'zaOrder'){
+      this.products.sort(function(a: any, b: any){
+        if(a.titulo < b.titulo){
+          return 1;
+        }else if(a.titulo > b.titulo){
+          return -1;
+        }else{
+          return 0;
+        }
+      });
+    }
+
+
   }
 
 }
