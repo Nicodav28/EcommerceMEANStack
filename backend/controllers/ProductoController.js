@@ -265,15 +265,19 @@ const uploadProductGallery = async function (req, res) {
         if (req.user.rol == 'admin') {
             var id = req.params['id'];
             var data = req.body;
-            
+
             var imgPath = req.files.imagen.path;
             var name = imgPath.split('\\');
             var imageName = name[2];
             // console.log(data);
-            let reg = await producto.findByIdAndUpdate({_id: id},{$push: {galeria:{
-                imagen: imageName,
-                _id: data._id
-            }}});
+            let reg = await producto.findByIdAndUpdate({ _id: id }, {
+                $push: {
+                    galeria: {
+                        imagen: imageName,
+                        _id: data._id
+                    }
+                }
+            });
             res.status(200).send({ data: reg, message: 'Carga de imagen exitosa' });
 
         } else {
@@ -289,9 +293,9 @@ const deleteProductGallery = async function (req, res) {
         if (req.user.rol == 'admin') {
             var id = req.params['id'];
             var data = req.body;
-            
+
             // console.log(data);
-            let reg = await producto.findByIdAndUpdate({_id: id},{$pull: {galeria:{_id:data._id}}});
+            let reg = await producto.findByIdAndUpdate({ _id: id }, { $pull: { galeria: { _id: data._id } } });
             res.status(200).send({ data: reg, message: 'Eliminación de imagen exitosa' });
 
         } else {
@@ -308,9 +312,26 @@ const deleteProductGallery = async function (req, res) {
 const fetchProductsGuest = async function (req, res) {
     var filtro = req.params['filtro'];
 
-            let getData = await producto.find({ titulo: new RegExp(filtro, 'i') });
-            res.status(200).send({ data: getData });
+    let getData = await producto.find({ titulo: new RegExp(filtro, 'i') }).sort({ createdAt: -1 });
+    res.status(200).send({ data: getData });
 }
+
+const fetchProductsDetails = async function (req, res) {
+    var slug = req.params['slug'];
+
+    let getData = await producto.findOne({ slug: slug });
+    res.status(200).send({ data: getData });
+}
+
+const fetchProductsRecommended = async function (req, res) {
+    var categoria = req.params['categoria'];
+
+    let getData = await producto.find({ categoria: categoria }).sort({ createdAt: -1 }).limit(8);
+    res.status(200).send({ data: getData });
+}
+
+
+
 
 module.exports = {
     registroProducto,
@@ -325,5 +346,7 @@ module.exports = {
     updateProductVariety,
     uploadProductGallery,
     deleteProductGallery,
-    fetchProductsGuest
+    fetchProductsGuest,
+    fetchProductsDetails,
+    fetchProductsRecommended  
 }
