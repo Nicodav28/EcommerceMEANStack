@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 
 declare var iziToast: any;
+declare var $: any;
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -14,6 +15,7 @@ export class NavComponent implements OnInit {
   public userData: any = undefined;
   public userLc: any = {};
   public categories: any = {};
+  public cartStat = false;
   
   constructor(
     private _clientService: ClienteService,
@@ -68,6 +70,20 @@ export class NavComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  cartStatFunc(){
+
+    if(!this.cartStat){
+
+      this.cartStat = true;
+      $('#cart').addClass('show');
+    }else{
+
+      this.cartStat = false;
+      $('#cart').removeClass('show');
+    } 
+
   }
 
 }

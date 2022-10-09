@@ -16,6 +16,7 @@ export class ShowProductoComponent implements OnInit {
   public guestProduct: any = {};
   public url: string;
   public recoProducts: Array<any> = [];
+  public categoria: any;
 
   constructor(
     private _route: ActivatedRoute,
@@ -29,13 +30,14 @@ export class ShowProductoComponent implements OnInit {
           response => {
             //@ts-ignore
             this.guestProduct = response.data;
-          }
-        );
+            this.categoria = this.guestProduct.categoria;
 
-        this._guestService.fetchProductsRecommended(this.guestProduct.categoria).subscribe(
-          response => {
-            //@ts-ignore
-            this.recoProducts = response.data;
+            this._guestService.fetchProductsRecommended(this.categoria).subscribe(
+              response => {
+                //@ts-ignore
+                this.recoProducts = response.data;
+              }
+            );
           }
         );
       }

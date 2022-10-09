@@ -16,6 +16,7 @@ import { SidebarComponent } from './components/usuario/sidebar/sidebar.component
 import { IndexProductoComponent } from './components/productos/index-producto/index-producto.component';
 import {NgbPaginationModule, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import { ShowProductoComponent } from './components/productos/show-producto/show-producto.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ShowProductoComponent } from './components/productos/show-producto/show
     SidebarComponent,
     IndexProductoComponent,
     ShowProductoComponent,
+    CarritoComponent,
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,7 @@ api.post('/createInventory', authJwt.auth, ProductoController.createInventory);
 // Publicos
 api.get('/fetchProductsGuest/:filtro?', ProductoController.fetchProductsGuest);
 api.get('/fetchProductsDetails/:slug', ProductoController.fetchProductsDetails);
-api.get('/fetchProductsRecommended/:categoria', ProductoController.fetchProductsRecommended);
+api.post('/fetchProductsRecommended/:categoria', ProductoController.fetchProductsRecommended);
 
 
 module.exports = api;

@@ -22,7 +22,7 @@ export class GuestService {
 
   fetchProductsRecommended(categoria: any){
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this._http.get(this.url + 'fetchProductsRecommended/' + categoria,{ headers: headers });
+    return this._http.post(this.url + 'fetchProductsRecommended/' + categoria,{ headers: headers });
   }
 
 }
