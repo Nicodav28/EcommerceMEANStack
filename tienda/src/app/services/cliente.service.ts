@@ -70,4 +70,9 @@ export class ClienteService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.get(this.url + 'fetchProductsGuest/' + filtro,{ headers: headers });
   }
+
+  addClientCart(data: any, token: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.post(this.url + 'addClientCart/', data,{headers: headers});
+  }
 }

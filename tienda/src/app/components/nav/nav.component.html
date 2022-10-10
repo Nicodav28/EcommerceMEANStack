@@ -59,10 +59,16 @@
           </ng-container>
           </li>
           <li class="divider-vertical mb-0 d-lg-block d-none"></li>
-          <li class="nav-item align-self-center mb-0">
+          <li class="nav-item align-self-center mb-0" *ngIf="userLc != undefined">
             <a style="cursor: pointer" class="nav-tool pr-lg-0" (click)="cartStatFunc()">
               <i class="cxi-cart nav-tool-icon"></i>
               <span class="badge badge-success align-middle mt-n1 ml-2 px-2 py-1 font-size-xs">4</span>
+            </a>
+          </li>
+          <li class="nav-item align-self-center mb-0" *ngIf="userLc == undefined">
+            <a [routerLink]="['/login']" style="cursor: pointer" class="nav-tool pr-lg-0">
+              <i class="cxi-cart nav-tool-icon"></i>
+              <span class="badge badge-success align-middle mt-n1 ml-2 px-2 py-1 font-size-xs">0</span>
             </a>
           </li>
           <li class="divider-vertical mb-0 d-lg-none d-block"></li>
@@ -318,9 +324,9 @@
       <span class="text-muted mr-2">Subtotal:</span>
       <span class="h5 mb-0">$198.65</span>
     </div>
-    <a href="checkout.html" class="btn btn-primary btn-lg btn-block">
+    <a [routerLink]="['/carrito']" routerLinkActive="router-link-active"  class="btn btn-primary btn-lg btn-block">
       <i class="cxi-credit-card font-size-lg mt-n1 mr-1"></i>
-      Checkout
+      Comprar Productos
     </a>
   </div>
 </div>

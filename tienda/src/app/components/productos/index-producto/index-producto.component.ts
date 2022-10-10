@@ -6,6 +6,7 @@ import { global } from 'src/app/services/global';
 
 declare var noUiSlider: any;
 declare var $: any;
+declare var iziToast: any;
 
 @Component({
   selector: 'app-index-producto',
@@ -28,6 +29,12 @@ export class IndexProductoComponent implements OnInit {
   public page: number = 1;
   public pageSize: number = 12;
   public sortBy: any = 'Defecto';
+  public dataCart: any = {
+    variedad: '',
+    cantidad: 1
+  };
+  public token: any;
+  public loadBtn: boolean =  false;
 
   constructor(
     private _clienteService: ClienteService,
@@ -36,6 +43,7 @@ export class IndexProductoComponent implements OnInit {
   ) {
     this.initData();
     this.url = global.url;
+    this.token = localStorage.getItem('token');
   }
 
   ngOnInit(): void {
@@ -244,6 +252,46 @@ export class IndexProductoComponent implements OnInit {
     }
 
 
+  }
+
+  addCartProduct(guestProduct){
+    this.loadBtn = true;
+    
+    if(guestProduct.variedades[0] == undefined || guestProduct.variedad == 0){
+      iziToast.error({
+        title: 'Error:',
+        position: 'topRight',
+        message: 'El articulo que intenta comprar no tiene variedades, contactese con el administrador de la tienda'
+      });
+
+      this.loadBtn = false;
+    }else{
+      let data = {
+        producto: guestProduct._id,
+        cliente: localStorage.getItem("_id"),
+        cantidad: 1,
+        variedad: guestProduct.variedades[0].titulo
+      }
+
+      this._clienteService.addClientCart(data, this.token).subscribe(
+        response => {
+          if(response.data == undefined) {
+            iziToast.error({
+              title: 'Error:',
+              position: 'topRight',
+              message: 'Este producto ya fue ingresado al carrito de compras'
+            });
+          }else{
+            iziToast.success({
+              title: 'Exito:',
+              position: 'topRight',
+              message: 'El producto ha sido agregado correctamente al carrito'
+            });
+          }
+          this.loadBtn = false;
+        }
+      );
+    }
   }
 
 }

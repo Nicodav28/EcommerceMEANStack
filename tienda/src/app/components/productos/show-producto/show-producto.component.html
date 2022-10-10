@@ -122,8 +122,8 @@
                     <div class="col-sm-8 order-sm-1 order-2">
                         <div *ngIf="guestProduct.tituloVariedad" class="form-group">
                             <label for="size">{{guestProduct.tituloVariedad}}</label>
-                            <select class="form-control custom-select" id="size">
-                                <option value="" selected disabled>Seleccionar</option>
+                            <select class="form-control custom-select" id="size" name="variedad" [(ngModel)]="dataCart.variedad">
+                                <option value="" selected>Seleccionar</option>
                                 <option *ngFor="let variedad of guestProduct.variedades" value="{{variedad.titulo}}">{{variedad.titulo}}</option>
                             </select>
                         </div>
@@ -137,18 +137,25 @@
                     </div>
                     <div class="col-lg-2 col-4 order-lg-3 order-3">
                         <div class="form-group">
-                            <select class="form-control custom-select" id="select-input">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>5</option>
-                                <option>10</option>
+                            <!-- <input type="form-control custom-select"> -->
+                            <select class="form-control custom-select" id="select-input" name="cantidad" [(ngModel)]="dataCart.cantidad">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="500">500</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6 order-lg-4 order-4">
-                        <button class="btn btn-block btn-primary">
+                        <button *ngIf="!loadBtn" class="btn btn-block btn-primary" (click)="addCartProduct()">
                             <i class="cxi-cart mr-2"></i>
                             Agregar al Carrito
+                        </button>
+
+                        <button *ngIf="loadBtn" type="button" class="btn btn-secondary" disabled>
+                          <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
+                          Agregando al carrito...
                         </button>
                     </div>
                     <div class="col-lg-4 col-8 order-lg-5 order-2">

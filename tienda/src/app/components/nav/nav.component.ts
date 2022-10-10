@@ -31,8 +31,14 @@ export class NavComponent implements OnInit {
           localStorage.setItem('user_data', JSON.stringify(this.userData));
         },
         error => {
-          console.log(error);
           this.userData = undefined;
+          localStorage.clear();
+          iziToast.info({
+            title: 'Sesión cerrada:',
+            position: 'bottomRight',
+            message: 'Ha ocurrido un error o su sesión ha expirado, inicie sesión nuevamente.'
+          });
+          this._router.navigate(['/login']);
         }
       );
     }
