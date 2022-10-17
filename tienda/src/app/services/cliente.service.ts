@@ -75,4 +75,16 @@ export class ClienteService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
     return this._http.post(this.url + 'addClientCart/', data,{headers: headers});
   }
+
+  fetchClientCart(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.get(this.url + 'fetchClientCart/'+id,{headers: headers});
+  }
+
+  delClientCart(id: any, token: any): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', token);
+    return this._http.delete(this.url + 'delClientCart/'+id,{headers: headers});
+  }
+
+  
 }

@@ -9,6 +9,7 @@ var api = express.Router();
 var authJwt = require('../middlewares/authenticate');
 
 api.post('/addClientCart', authJwt.auth, carritoController.addClientCart);
-
+api.get('/fetchClientCart/:id', authJwt.auth, carritoController.fetchClientCart);
+api.delete('/delClientCart/:id', authJwt.auth, carritoController.delClientCart);
 
 module.exports = api;

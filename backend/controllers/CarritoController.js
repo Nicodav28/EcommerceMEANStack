@@ -20,6 +20,32 @@ const addClientCart = async (req, res) => {
     }
 }
 
+const fetchClientCart = async (req, res) => {
+    if (req.user) {
+        let id = req.params['id'];
+
+        let clientCart = await carrito.find({cliente: id}).populate('producto');
+
+        res.status(200).send({ data: clientCart });
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
+const delClientCart = async (req, res) => {
+    if (req.user) {
+        let id = req.params['id'];
+
+        let reg = await carrito.findByIdAndRemove({_id: id});
+
+        res.status(200).send({ data: reg });
+    }else{
+        res.status(500).send({ message: 'ForbbidenAccess' });
+    }
+}
+
 module.exports = {
     addClientCart,
+    fetchClientCart,
+    delClientCart
 };
