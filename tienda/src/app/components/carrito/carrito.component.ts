@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { global } from 'src/app/services/global';
+import { io } from "socket.io-client";
 
+declare var iziToast: any;
 @Component({
   selector: 'app-carrito',
   templateUrl: './carrito.component.html',
@@ -16,6 +18,7 @@ export class CarritoComponent implements OnInit {
   public subTotal: any = 0;
   public val;
   public totalPayment: any;
+  public socket: any = io('http://localhost:4201');
 
   constructor(
     private _clientService: ClienteService
@@ -24,15 +27,19 @@ export class CarritoComponent implements OnInit {
     this.token = localStorage.getItem('token');
     this.url = global.url;
 
+    this.initData();
+  }
+
+  ngOnInit(): void {
+  }
+
+  initData(){
     this._clientService.fetchClientCart(this.id, this.token).subscribe(
       response => {
         this.cartArr = response.data;
         this.cartCalculate();
       }
     )
-  }
-
-  ngOnInit(): void {
   }
 
   cartCalculate() {
@@ -45,6 +52,23 @@ export class CarritoComponent implements OnInit {
     });
 
     this.totalPayment = this.val;
+  }
+
+  deleteItem(id){
+    this._clientService.delClientCart(id, this.token).subscribe(
+      response => {
+        iziToast.success({
+          title: 'Producto Elminado',
+          position: 'topRight',
+          message: 'El producto ha sido quitado del carrito exitosamente.'
+        });
+        
+        this.socket.emit('cartDelete', {data: response.data});
+
+        this.initData();
+
+      }
+    );
   }
 
 }

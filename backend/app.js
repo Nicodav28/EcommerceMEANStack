@@ -8,6 +8,22 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var port = process.env.PORT || 4201;// Variable para puerto de ejecución del Backend
 
+var server = require('http').createServer(app);
+var io = require('socket.io')(server,{
+    cors: {origin : '*'}
+});
+
+io.on('connection', function(socket) {
+    socket.on('cartDelete', function(data){
+        io.emit('newCart', data);
+        console.log(data);
+    });
+    socket.on('addCart', function(data){
+        io.emit('newCartAdd', data);
+        console.log(data);
+    });
+});
+
 // ------------ROUTES IMPORTS----------
 var clienteRoute = require('./routes/cliente');
 var adminRoute = require ('./routes/admin');
@@ -22,7 +38,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/tienda',(err, res) => {
         console.log(err);
     }else{
         // Si no hay error se inicializa el servidor backend indicandole el puerto y la tarea ejecutar cuando se inicie
-        app.listen(port, function(){
+        server.listen(port, function(){
             console.log('Servidor corriendo en el puerto ' + port);
         });
     }

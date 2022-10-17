@@ -138,13 +138,15 @@
                     <div class="col-lg-2 col-4 order-lg-3 order-3">
                         <div class="form-group">
                             <!-- <input type="form-control custom-select"> -->
-                            <select class="form-control custom-select" id="select-input" name="cantidad" [(ngModel)]="dataCart.cantidad">
+                            <!-- <select class="form-control custom-select" id="select-input" name="cantidad" [(ngModel)]="dataCart.cantidad">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="500">500</option>
-                            </select>
+                            </select> -->
+
+                            <input type="number" class="form-control form-control-sm bg-light mr-3" style="width: 4.5rem;" min="1" value="{{dataCart.cantidad}}" name="cantidad" [(ngModel)]="dataCart.cantidad">
                         </div>
                     </div>
                     <div class="col-lg-6 order-lg-4 order-4">

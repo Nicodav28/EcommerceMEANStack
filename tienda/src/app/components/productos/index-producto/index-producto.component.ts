@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { global } from 'src/app/services/global';
+import { io } from "socket.io-client";
 
 declare var noUiSlider: any;
 declare var $: any;
@@ -37,6 +38,7 @@ export class IndexProductoComponent implements OnInit {
   public loadBtn: boolean =  false;
   public user: any;
   public _id: any;
+  public socket: any = io('http://localhost:4201');
 
   constructor(
     private _clienteService: ClienteService,
@@ -287,10 +289,12 @@ export class IndexProductoComponent implements OnInit {
               });
             }else{
               iziToast.success({
-                title: 'Exito:',
+                title: 'Producto Agregado:',
                 position: 'topRight',
                 message: 'El producto ha sido agregado correctamente al carrito'
               });
+              this.socket.emit('addCart', {data: true});
+              this.loadBtn = false;
             }
             this.loadBtn = false;
           }
@@ -302,7 +306,6 @@ export class IndexProductoComponent implements OnInit {
         position: 'topRight',
         message: 'Debe iniciar sesión para acceder al carrito de compras'
       });
-      this.loadBtn = false;
     }
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { global } from 'src/app/services/global';
+import { io } from "socket.io-client";
 
 declare var iziToast: any;
 declare var $: any;
@@ -22,6 +23,7 @@ export class NavComponent implements OnInit {
   public subTotal: any = 0;
   public priceFormat: any;
   public val;
+  public socket: any = io('http://localhost:4201');
   
   constructor(
     private _clientService: ClienteService,
@@ -36,20 +38,15 @@ export class NavComponent implements OnInit {
         response => {
           this.userData = response.data;
           localStorage.setItem('user_data', JSON.stringify(this.userData));
+          this.getClientCart();
 
-          this._clientService.fetchClientCart(this.id, this.token).subscribe(
-            response => {
-              this.cartArr = response.data;
-              this.cartCalculate();
-            }
-          );
         },
         error => {
           this.userData = undefined;
           localStorage.clear();
           iziToast.info({
             title: 'Sesión cerrada:',
-            position: 'bottomRight',
+            position: 'topRight',
             message: 'Ha ocurrido un error o su sesión ha expirado, inicie sesión nuevamente.'
           });
           this._router.navigate(['/login']);
@@ -61,6 +58,14 @@ export class NavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.socket.on('newCart', function(data){
+      this.getClientCart();
+    }.bind(this));
+
+
+    this.socket.on('newCartAdd', function(data){
+      this.getClientCart();
+    }.bind(this));
   }
 
   ngDoCheck(){
@@ -71,10 +76,20 @@ export class NavComponent implements OnInit {
     }
   }
 
+  getClientCart(){
+    
+    this._clientService.fetchClientCart(this.id, this.token).subscribe(
+      response => {
+        this.cartArr = response.data;
+        this.cartCalculate();
+      }
+    );
+  }
+
   logoutGuest(){
     iziToast.info({
       title: 'Sesión cerrada:',
-      position: 'bottomRight',
+      position: 'topRight',
       message: 'Se ha cerrado la sesión con exito'
     });
     localStorage.clear();
@@ -117,7 +132,13 @@ export class NavComponent implements OnInit {
   deleteItem(id){
     this._clientService.delClientCart(id, this.token).subscribe(
       response => {
-        console.log(response);
+        iziToast.success({
+          title: 'Producto Elminado',
+          position: 'topRight',
+          message: 'El producto ha sido quitado del carrito exitosamente.'
+        });
+        
+        this.socket.emit('cartDelete', {data: response.data});
       }
     );
   }
